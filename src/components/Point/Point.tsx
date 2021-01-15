@@ -6,7 +6,7 @@ import { IPoint } from '../../entities';
 
 type IPointProps = IPoint;
 
-export const Point = ({ id, pointGroupId, name, isActive }: IPointProps) => {
+export const Point = ({ name, isActive }: IPointProps) => {
   return (
     <Button
       variant="contained"
