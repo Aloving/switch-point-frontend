@@ -7,9 +7,9 @@ import styles from './Board.module.css';
 
 interface IBoardProps {
   lists: IPointGroup[];
-  onListAdd: (name: string, description: string) => void;
-  onPointAdd: (groupId: string, name: string, description: string) => void;
-  onListUpdate: (payload: IPointGroup) => void;
+  onListAdd?: (name: string, description: string) => void;
+  onPointAdd?: (groupId: string, name: string, description: string) => void;
+  onListUpdate?: (payload: IPointGroup) => void;
 }
 
 export const Board = ({ lists, onListUpdate }: IBoardProps) => {
