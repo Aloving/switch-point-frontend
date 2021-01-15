@@ -1,75 +1,33 @@
 import React from 'react';
-import { Container } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
-import styles from './Board.module.css';
+import { IPointGroup } from '../../entities';
 import { PointGroup } from '../PointGroup';
+import styles from './Board.module.css';
 
-export const Board = () => {
+interface IBoardProps {
+  lists: IPointGroup[];
+}
+
+export const Board = ({ lists }: IBoardProps) => {
   return (
     <div className={styles.root}>
-      <PointGroup
-        id={'10'}
-        name={'name'}
-        description={'descriptions'}
-        points={[
-          {
-            id: 1,
-            isActive: true,
-            pointGroupId: '10',
-            name: 'first point',
-            description: 'description of first point',
-          },
-          {
-            id: 2,
-            isActive: false,
-            pointGroupId: '10',
-            name: 'second point',
-            description: 'description of first point',
-          },
-        ]}
-      />
-      <PointGroup
-        id={'10'}
-        name={'name'}
-        description={'descriptions'}
-        points={[
-          {
-            id: 1,
-            isActive: false,
-            pointGroupId: '10',
-            name: 'first point',
-            description: 'description of first point',
-          },
-          {
-            id: 2,
-            isActive: false,
-            pointGroupId: '10',
-            name: 'second point',
-            description: 'description of first point',
-          },
-        ]}
-      />
-      <PointGroup
-        id={'10'}
-        name={'name'}
-        description={'descriptions'}
-        points={[
-          {
-            id: 1,
-            isActive: false,
-            pointGroupId: '10',
-            name: 'first point',
-            description: 'description of first point',
-          },
-          {
-            id: 2,
-            isActive: false,
-            pointGroupId: '10',
-            name: 'second point',
-            description: 'description of first point',
-          },
-        ]}
-      />
+      {lists.map((list) => (
+        <div className={styles.group}>
+          <PointGroup
+            key={list.id}
+            id={list.id}
+            name={list.name}
+            description={list.description}
+            points={list.points}
+          />
+        </div>
+      ))}
+      <div className={styles.group}>
+        <Button variant="outlined" color="primary" size="large">
+          +
+        </Button>
+      </div>
     </div>
   );
 };

@@ -3,3 +3,10 @@
   grid-auto-columns:350px;
   grid-auto-flow: column;
 }
+
+.group {
+  display: grid;
+  grid-auto-rows: max-content;
+  grid-gap: 10px;
+  padding: 10px;
+}

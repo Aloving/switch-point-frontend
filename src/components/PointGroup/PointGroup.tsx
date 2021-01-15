@@ -5,10 +5,9 @@ import {
   CardHeader,
   CardContent,
   Divider,
-  CardActions,
   IconButton,
 } from '@material-ui/core';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 
 import { IPointGroup } from '../../entities';
@@ -16,21 +15,21 @@ import { Point } from '../Point';
 
 import styles from './PointGroup.module.css';
 
-type IPointGroupProps = IPointGroup;
+export type IPointGroupProps = IPointGroup;
 
 export const PointGroup = ({ points, description, name }: IPointGroupProps) => {
   return (
-    <div className={styles.root}>
+    <div>
       <Card variant="outlined">
         <CardHeader
           avatar={<Avatar variant="rounded">R</Avatar>}
           action={
             <>
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
-              <IconButton aria-label="settings">
+              <IconButton>
                 <EditIcon />
+              </IconButton>
+              <IconButton>
+                <AddIcon />
               </IconButton>
             </>
           }
@@ -43,6 +42,7 @@ export const PointGroup = ({ points, description, name }: IPointGroupProps) => {
           }}
           subheader={description}
         />
+        <Divider variant="middle" />
         <CardContent>
           {points.map((point) => (
             <div className={styles.point}>
