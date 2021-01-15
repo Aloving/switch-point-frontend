@@ -1,0 +1,5 @@
+.root {
+  display: grid;
+  grid-auto-columns:350px;
+  grid-auto-flow: column;
+}

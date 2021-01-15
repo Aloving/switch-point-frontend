@@ -1,0 +1,16 @@
+.root {
+  display: grid;
+  grid-auto-rows: max-content;
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+.point {
+  padding: 10px 0;
+  display: flex;
+}
+
+.actions {
+  text-align: right;
+  justify-content: flex-end;
+}
