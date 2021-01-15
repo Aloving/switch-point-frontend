@@ -15,7 +15,9 @@ import { Point } from '../Point';
 
 import styles from './PointGroup.module.css';
 
-export type IPointGroupProps = IPointGroup;
+export interface IPointGroupProps extends IPointGroup {
+  onGroupUpdate: (group: IPointGroup) => void;
+}
 
 export const PointGroup = ({ points, description, name }: IPointGroupProps) => {
   return (
