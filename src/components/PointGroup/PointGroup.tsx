@@ -1,14 +1,22 @@
 import React from 'react';
-import { Card, CardHeader, CardContent, Divider, Box } from '@material-ui/core';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Divider,
+  Box,
+  CardActions,
+  IconButton,
+} from '@material-ui/core';
 import { FieldArray } from 'formik';
 
 import { IPointGroup } from '../../entities';
 import { Point } from '../Point';
 import { Avatar } from '../Avatar';
-import { Actions } from './components';
-import styles from './PointGroup.module.css';
 import { GroupSubHeader } from '../GroupSubHeader';
 import { GroupTitle } from '../GroupTitle';
+import { Actions } from './components';
+import styles from './PointGroup.module.css';
 
 export interface IPointGroupProps extends IPointGroup {
   isEditMode: boolean;
@@ -64,6 +72,18 @@ export const PointGroup = ({
               }}
             />
           </CardContent>
+          {isEditMode && (
+            <>
+              <Divider variant="middle" />
+              <CardActions
+                style={{
+                  justifyContent: 'flex-end',
+                }}
+              >
+                <Actions isEditMode={isEditMode} />
+              </CardActions>
+            </>
+          )}
         </Box>
       </Card>
     </div>

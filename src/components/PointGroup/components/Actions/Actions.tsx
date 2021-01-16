@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Divider } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import DoneIcon from '@material-ui/icons/Done';
@@ -16,6 +16,9 @@ export const Actions = ({ onAdd, onEdit, isEditMode }: ActionsProps) => {
     <>
       <IconButton>
         <DoneIcon color="primary" />
+      </IconButton>
+      <IconButton onClick={onAdd}>
+        <AddIcon />
       </IconButton>
     </>
   ) : (

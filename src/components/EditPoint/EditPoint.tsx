@@ -15,7 +15,7 @@ export const EditPoint = ({ index, onPointDelete }: IEditPointProps) => {
     <Field
       name={`points.${index}.name`}
       render={({ field }: FieldProps<string>) => (
-        <Box mb={1} className={styles.root}>
+        <Box className={styles.root}>
           <TextField size="small" variant="outlined" fullWidth {...field} />
           <IconButton aria-label="delete" onClick={onPointDelete}>
             <DeleteIcon fontSize="small" />
