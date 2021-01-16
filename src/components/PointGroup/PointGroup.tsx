@@ -1,8 +1,6 @@
 import React from 'react';
 import { Card, CardHeader, CardContent, Divider, Box } from '@material-ui/core';
-import { ArrayHelpers, FieldArray } from 'formik';
-import { makeStyles } from '@material-ui/core/styles';
-import { color } from '@material-ui/system';
+import { FieldArray } from 'formik';
 
 import { IPointGroup } from '../../entities';
 import { Point } from '../Point';

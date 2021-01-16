@@ -13,7 +13,7 @@ interface IBoardProps {
   onListUpdate?: (payload: IPointGroup) => void;
 }
 
-export const Board = ({ editId, lists, onListUpdate }: IBoardProps) => {
+export const Board = ({ lists }: IBoardProps) => {
   return (
     <div className={styles.root}>
       {lists.map(({ id, name, description, points }) => (
