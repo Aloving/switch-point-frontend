@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardHeader, CardContent, Divider, Box } from '@material-ui/core';
+import { ArrayHelpers, FieldArray } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
 import { color } from '@material-ui/system';
 
@@ -48,11 +49,22 @@ export const PointGroup = ({
           />
           <Divider variant="middle" />
           <CardContent>
-            {points.map((point) => (
-              <div className={styles.point}>
-                <Point {...point} key={point.id} />
-              </div>
-            ))}
+            <FieldArray
+              name="points"
+              render={(arrayHelpers) => {
+                return points.map((point, index) => (
+                  <div className={styles.point}>
+                    <Point
+                      {...point}
+                      key={point.id}
+                      index={index}
+                      isEditMode={isEditMode}
+                      onPointDelete={() => arrayHelpers.remove(index)}
+                    />
+                  </div>
+                ));
+              }}
+            />
           </CardContent>
         </Box>
       </Card>

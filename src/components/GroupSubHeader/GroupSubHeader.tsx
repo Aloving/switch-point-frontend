@@ -3,8 +3,8 @@ import { Field, FieldProps } from 'formik';
 import { TextField, Box } from '@material-ui/core';
 
 interface IGroupSubHeaderProps {
-  description?: string;
   isEditMode: boolean;
+  description?: string;
 }
 
 export const GroupSubHeader = ({
