@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 
 import { IPointGroup } from '../../entities';
-import { PointGroup } from '../PointGroup';
+import { PointGroupContainer } from '../../containers';
 import styles from './Board.module.css';
 
 interface IBoardProps {
@@ -18,14 +18,13 @@ export const Board = ({ editId, lists, onListUpdate }: IBoardProps) => {
     <div className={styles.root}>
       {lists.map(({ id, name, description, points }) => (
         <div className={styles.group}>
-          <PointGroup
+          <PointGroupContainer
             key={id}
             id={id}
-            isEditMode={editId === id}
             name={name}
             description={description}
             points={points}
-            onGroupUpdate={onListUpdate}
+            isEditMode
           />
         </div>
       ))}

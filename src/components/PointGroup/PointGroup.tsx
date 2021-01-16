@@ -1,14 +1,8 @@
-import React, { useState } from 'react';
-import {
-  Avatar,
-  Card,
-  CardHeader,
-  CardContent,
-  Divider,
-} from '@material-ui/core';
-
+import React from 'react';
+import { Card, CardHeader, CardContent, Divider } from '@material-ui/core';
 import { IPointGroup } from '../../entities';
 import { Point } from '../Point';
+import { Avatar } from '../Avatar';
 import { Actions } from './components';
 import styles from './PointGroup.module.css';
 
@@ -27,7 +21,7 @@ export const PointGroup = ({
     <div>
       <Card variant="outlined">
         <CardHeader
-          avatar={<Avatar variant="rounded">R</Avatar>}
+          avatar={<Avatar isEditMode={isEditMode} />}
           action={<Actions />}
           title={name}
           titleTypographyProps={{

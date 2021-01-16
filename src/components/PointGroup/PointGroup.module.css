@@ -7,3 +7,8 @@
   text-align: right;
   justify-content: flex-end;
 }
+
+.avatarEditMode {
+  border: 3px solid #fe6b8b;
+  position: relative;
+}
