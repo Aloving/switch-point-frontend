@@ -8,6 +8,8 @@ import { Point } from '../Point';
 import { Avatar } from '../Avatar';
 import { Actions } from './components';
 import styles from './PointGroup.module.css';
+import { GroupSubHeader } from '../GroupSubHeader';
+import { GroupTitle } from '../GroupTitle';
 
 export interface IPointGroupProps extends IPointGroup {
   isEditMode: boolean;
@@ -27,14 +29,22 @@ export const PointGroup = ({
           <CardHeader
             avatar={<Avatar isEditMode={isEditMode} />}
             action={<Actions isEditMode={isEditMode} />}
-            title={name}
+            title={<GroupTitle title={name} isEditMode={isEditMode} />}
             titleTypographyProps={{
               align: 'left',
             }}
             subheaderTypographyProps={{
               align: 'left',
             }}
-            subheader={description}
+            style={{
+              alignItems: 'end',
+            }}
+            subheader={
+              <GroupSubHeader
+                isEditMode={isEditMode}
+                description={description}
+              />
+            }
           />
           <Divider variant="middle" />
           <CardContent>
