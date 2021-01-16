@@ -1,5 +1,8 @@
 import React from 'react';
-import { Card, CardHeader, CardContent, Divider } from '@material-ui/core';
+import { Card, CardHeader, CardContent, Divider, Box } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { color } from '@material-ui/system';
+
 import { IPointGroup } from '../../entities';
 import { Point } from '../Point';
 import { Avatar } from '../Avatar';
@@ -19,27 +22,29 @@ export const PointGroup = ({
 }: IPointGroupProps) => {
   return (
     <div>
-      <Card variant="outlined">
-        <CardHeader
-          avatar={<Avatar isEditMode={isEditMode} />}
-          action={<Actions />}
-          title={name}
-          titleTypographyProps={{
-            align: 'left',
-          }}
-          subheaderTypographyProps={{
-            align: 'left',
-          }}
-          subheader={description}
-        />
-        <Divider variant="middle" />
-        <CardContent>
-          {points.map((point) => (
-            <div className={styles.point}>
-              <Point {...point} key={point.id} />
-            </div>
-          ))}
-        </CardContent>
+      <Card variant={isEditMode ? 'elevation' : 'outlined'}>
+        <Box boxShadow={isEditMode ? 3 : 0}>
+          <CardHeader
+            avatar={<Avatar isEditMode={isEditMode} />}
+            action={<Actions isEditMode={isEditMode} />}
+            title={name}
+            titleTypographyProps={{
+              align: 'left',
+            }}
+            subheaderTypographyProps={{
+              align: 'left',
+            }}
+            subheader={description}
+          />
+          <Divider variant="middle" />
+          <CardContent>
+            {points.map((point) => (
+              <div className={styles.point}>
+                <Point {...point} key={point.id} />
+              </div>
+            ))}
+          </CardContent>
+        </Box>
       </Card>
     </div>
   );

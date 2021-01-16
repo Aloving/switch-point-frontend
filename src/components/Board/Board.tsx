@@ -24,10 +24,35 @@ export const Board = ({ editId, lists, onListUpdate }: IBoardProps) => {
             name={name}
             description={description}
             points={points}
-            isEditMode
+            isEditMode={false}
           />
         </div>
       ))}
+      <div className={styles.group}>
+        <PointGroupContainer
+          key={'11'}
+          id={'11'}
+          name={'name'}
+          description={'description'}
+          points={[
+            {
+              id: 1,
+              isActive: true,
+              pointGroupId: '10',
+              name: 'first point',
+              description: 'description of first point',
+            },
+            {
+              id: 2,
+              isActive: false,
+              pointGroupId: '10',
+              name: 'second point',
+              description: 'description of first point',
+            },
+          ]}
+          isEditMode={true}
+        />
+      </div>
       <div className={styles.group}>
         <Button variant="outlined" color="primary" size="large">
           +
