@@ -1,40 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Avatar,
   Card,
   CardHeader,
   CardContent,
   Divider,
-  IconButton,
 } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
 
 import { IPointGroup } from '../../entities';
 import { Point } from '../Point';
-
+import { Actions } from './components';
 import styles from './PointGroup.module.css';
 
 export interface IPointGroupProps extends IPointGroup {
+  isEditMode: boolean;
   onGroupUpdate?: (group: IPointGroup) => void;
 }
 
-export const PointGroup = ({ points, description, name }: IPointGroupProps) => {
+export const PointGroup = ({
+  points,
+  description,
+  name,
+  isEditMode,
+}: IPointGroupProps) => {
   return (
     <div>
       <Card variant="outlined">
         <CardHeader
           avatar={<Avatar variant="rounded">R</Avatar>}
-          action={
-            <>
-              <IconButton>
-                <EditIcon />
-              </IconButton>
-              <IconButton>
-                <AddIcon />
-              </IconButton>
-            </>
-          }
+          action={<Actions />}
           title={name}
           titleTypographyProps={{
             align: 'left',
