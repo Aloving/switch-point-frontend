@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
 
-import { IPointGroup } from '../../entities';
+import { IPointGroup } from '../../interfaces';
 import { PointGroupContainer } from '../../containers';
 import styles from './Board.module.css';
 
@@ -28,31 +28,6 @@ export const Board = ({ lists }: IBoardProps) => {
           />
         </div>
       ))}
-      <div className={styles.group}>
-        <PointGroupContainer
-          key={'11'}
-          id={'11'}
-          name={'name'}
-          description={'description'}
-          points={[
-            {
-              id: 1,
-              isActive: true,
-              pointGroupId: '10',
-              name: 'first point',
-              description: 'description of first point',
-            },
-            {
-              id: 2,
-              isActive: false,
-              pointGroupId: '10',
-              name: 'second point',
-              description: 'description of first point',
-            },
-          ]}
-          isEditMode={true}
-        />
-      </div>
       <div className={styles.group}>
         <Button variant="outlined" color="primary" size="large">
           +

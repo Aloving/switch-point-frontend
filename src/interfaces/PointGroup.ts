@@ -6,3 +6,8 @@ export interface IPointGroup {
   description: string;
   points: IPoint[];
 }
+
+export type IPointGroupCreate = Omit<
+  IPointGroup,
+  'id' | 'description' | 'points'
+>;

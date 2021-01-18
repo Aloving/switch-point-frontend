@@ -2,31 +2,38 @@ import React, { useCallback } from 'react';
 import { Button } from '@material-ui/core';
 import AdjustIcon from '@material-ui/icons/Adjust';
 
-import { IPoint } from '../../entities';
+import { IPoint } from '../../interfaces';
 import { EditPoint } from '../EditPoint';
 
 interface IPointProps extends IPoint {
-  onPointToggle?: (id: string | number, checked: boolean) => void;
-  onPointDelete?: () => void;
+  disabled: boolean;
   index: number;
   isEditMode: boolean;
+  onPointToggle?: (id: string | number, checked: boolean) => void;
+  onPointDelete?: () => void;
 }
 
 export const Point = ({
-  name,
-  isActive,
+  disabled,
   id,
-  onPointToggle,
   index,
+  isActive,
   isEditMode,
+  name,
   onPointDelete,
+  onPointToggle,
 }: IPointProps) => {
   const handleOnClick = useCallback(() => {
     onPointToggle && onPointToggle(id, !isActive);
   }, [onPointToggle, id, isActive]);
 
   return isEditMode ? (
-    <EditPoint index={index} onPointDelete={onPointDelete} />
+    <EditPoint
+      index={index}
+      onPointDelete={onPointDelete}
+      name={name}
+      disabled={disabled}
+    />
   ) : (
     <Button
       variant="contained"

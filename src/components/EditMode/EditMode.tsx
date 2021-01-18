@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IPoint, IPointGroup } from '../../entities';
+import { IPoint, IPointGroup } from '../../interfaces';
 
 interface IEditModeProps extends IPointGroup {
   onEdit?: (group: IPointGroup) => void;
