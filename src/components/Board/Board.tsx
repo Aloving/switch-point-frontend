@@ -17,9 +17,8 @@ export const Board = ({ lists }: IBoardProps) => {
   return (
     <div className={styles.root}>
       {lists.map(({ id, name, description, points }) => (
-        <div className={styles.group}>
+        <div className={styles.group} key={id}>
           <PointGroupContainer
-            key={id}
             id={id}
             name={name}
             description={description}
