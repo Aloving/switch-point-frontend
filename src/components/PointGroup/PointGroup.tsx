@@ -50,13 +50,7 @@ export const PointGroup = ({
       <Box boxShadow={isEditMode ? 3 : 0}>
         <CardHeader
           action={renderActions()}
-          title={
-            <GroupTitle
-              title={name}
-              isEditMode={isEditMode}
-              disabled={disabled}
-            />
-          }
+          title={<GroupTitle isEditMode={isEditMode} disabled={disabled} />}
           titleTypographyProps={{
             align: 'left',
           }}
