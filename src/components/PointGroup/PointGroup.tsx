@@ -1,20 +1,18 @@
 import React from 'react';
 import {
-  Card,
   CardHeader,
   CardContent,
   Divider,
-  Box,
   CardActions,
 } from '@material-ui/core';
-import { FieldArray } from 'formik';
 
 import { IPointGroup } from '../../interfaces';
-import { Point } from '../Point';
 import { GroupSubHeader } from '../GroupSubHeader';
 import { GroupTitle } from '../GroupTitle';
 import { Actions } from '../Actions';
-import styles from './PointGroup.module.css';
+import { GroupBox } from '../GroupBox';
+import { GroupCard } from '../GroupCard';
+import { Points } from '../Points';
 
 export interface IPointGroupProps extends IPointGroup {
   disabled: boolean;
@@ -27,13 +25,10 @@ export interface IPointGroupProps extends IPointGroup {
 
 export const PointGroup = ({
   applyChanges,
-  description,
   disabled,
   isEditMode,
-  name,
   onAddPoint,
   onEdit,
-  points,
 }: IPointGroupProps) => {
   const renderActions = () => (
     <Actions
@@ -46,8 +41,8 @@ export const PointGroup = ({
   );
 
   return (
-    <Card variant={isEditMode ? 'elevation' : 'outlined'}>
-      <Box boxShadow={isEditMode ? 3 : 0}>
+    <GroupCard isEditMode={isEditMode}>
+      <GroupBox isEditMode={isEditMode}>
         <CardHeader
           action={renderActions()}
           title={<GroupTitle isEditMode={isEditMode} disabled={disabled} />}
@@ -66,23 +61,7 @@ export const PointGroup = ({
         />
         <Divider variant="middle" />
         <CardContent>
-          <FieldArray
-            name="points"
-            render={(arrayHelpers) => {
-              return points.map((point, index) => (
-                <div className={styles.point}>
-                  <Point
-                    {...point}
-                    disabled={disabled}
-                    key={point.id}
-                    index={index}
-                    isEditMode={isEditMode}
-                    onPointDelete={() => arrayHelpers.remove(index)}
-                  />
-                </div>
-              ));
-            }}
-          />
+          <Points isEditMode={isEditMode} disabled={disabled} />
         </CardContent>
         {isEditMode && (
           <>
@@ -96,7 +75,7 @@ export const PointGroup = ({
             </CardActions>
           </>
         )}
-      </Box>
-    </Card>
+      </GroupBox>
+    </GroupCard>
   );
 };

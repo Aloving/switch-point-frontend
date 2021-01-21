@@ -27,9 +27,8 @@ export const EditPoint = ({
   }, [fieldRef]);
 
   return (
-    <Field
-      name={`points.${index}.name`}
-      render={({ field }: FieldProps<string>) => (
+    <Field name={`points.${index}.name`}>
+      {({ field }: FieldProps<string>) => (
         <Box className={styles.root}>
           <TextField
             size="small"
@@ -48,6 +47,6 @@ export const EditPoint = ({
           </IconButton>
         </Box>
       )}
-    />
+    </Field>
   );
 };
