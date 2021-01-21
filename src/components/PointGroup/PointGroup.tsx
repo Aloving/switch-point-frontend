@@ -67,11 +67,7 @@ export const PointGroup = ({
             alignItems: 'end',
           }}
           subheader={
-            <GroupSubHeader
-              isEditMode={isEditMode}
-              description={description}
-              disabled={disabled}
-            />
+            <GroupSubHeader isEditMode={isEditMode} disabled={disabled} />
           }
         />
         <Divider variant="middle" />

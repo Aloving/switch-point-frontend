@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Field, FieldProps } from 'formik';
 import { TextField, Box, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -18,7 +18,7 @@ export const EditPoint = ({
   name,
   disabled,
 }: IEditPointProps) => {
-  const fieldRef = useRef<HTMLInputElement>(null);
+  const fieldRef = React.useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!name && fieldRef.current) {
