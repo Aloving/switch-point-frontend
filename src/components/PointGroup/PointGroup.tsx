@@ -14,7 +14,7 @@ import { GroupBox } from '../GroupBox';
 import { GroupCard } from '../GroupCard';
 import { Points } from '../Points';
 
-export interface IPointGroupProps extends IPointGroup {
+export interface IPointGroupProps {
   disabled: boolean;
   isEditMode: boolean;
   onAddPoint?: () => void;

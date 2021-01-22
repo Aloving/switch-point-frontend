@@ -13,7 +13,7 @@ interface IBoardProps {
   onListUpdate?: (payload: IPointGroup) => void;
 }
 
-export const Board = ({ lists }: IBoardProps) => {
+export const Board = ({ lists, editId }: IBoardProps) => {
   return (
     <div className={styles.root}>
       {lists.map(({ id, name, description, points }) => (
@@ -23,7 +23,7 @@ export const Board = ({ lists }: IBoardProps) => {
             name={name}
             description={description}
             points={points}
-            isEditMode={true}
+            isEditMode={id === editId}
           />
         </div>
       ))}

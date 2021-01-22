@@ -44,11 +44,9 @@ export const PointGroupContainer = ({
       onSubmit={handleSubmit}
       innerRef={formikRef}
     >
-      {({ handleSubmit, values }) => (
+      {({ handleSubmit }) => (
         <Form onSubmit={handleSubmit}>
           <PointGroup
-            id={id}
-            {...values}
             {...props}
             isEditMode={isEditMode}
             applyChanges={handleSubmit}
