@@ -1,60 +1,64 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Formik, Form, FormikProps } from 'formik';
 
 import { IPointGroup, IPointGroupForm } from '../../interfaces';
 import { PointGroup } from '../../components/PointGroup';
 import { createPoint } from '../../helpers';
 
-interface IPointGroupContainerProps extends IPointGroup {
+export interface IPointGroupContainerProps extends IPointGroup {
   isEditMode: boolean;
-  onEdit?: (group: IPointGroup) => void;
+  applyChanges?: (group: IPointGroup) => void;
+  setEditMode?: (groupId: IPointGroup['id']) => void;
+  isLoading: boolean;
 }
 
 export const PointGroupContainer = ({
-  name,
+  applyChanges,
   description,
-  points,
   id,
-  onEdit,
-  isEditMode: editMode,
+  isEditMode,
+  isLoading,
+  name,
+  points,
+  setEditMode,
   ...props
 }: IPointGroupContainerProps) => {
   const formikRef = useRef<FormikProps<IPointGroupForm>>(null);
-  const [isEditMode, setIsEditMode] = useState(editMode);
-  const handleSubmit = useCallback((values) => {
-    onEdit && onEdit({ ...values, id });
-    setIsEditMode(false);
-  }, []);
+  // @todo remove fake state, there will be a global edit mode callback
+  const handleSeEditMode = useCallback(() => {
+    setEditMode && setEditMode(id);
+  }, [id, setEditMode]);
+  const handleSubmit = useCallback(
+    (values) => {
+      applyChanges && applyChanges({ ...values, id });
+    },
+    [applyChanges],
+  );
   const handleOnAddPoint = useCallback(() => {
-    setIsEditMode(true);
+    handleSeEditMode();
     if (formikRef.current) {
       const currentPoints = formikRef.current.values.points;
       const pointsHelpers = formikRef.current.getFieldHelpers('points');
 
       pointsHelpers.setValue([...currentPoints, createPoint({ name: '' })]);
     }
-  }, [isEditMode, setIsEditMode, formikRef]);
-  const handleOnEdit = useCallback(() => {
-    setIsEditMode(true);
-  }, []);
+  }, [handleSeEditMode, formikRef]);
 
   return (
-    <Formik<Omit<IPointGroup, 'id'>>
+    <Formik<IPointGroupForm>
       initialValues={{ name, description, points }}
       onSubmit={handleSubmit}
       innerRef={formikRef}
     >
-      {({ handleSubmit, values }) => (
+      {({ handleSubmit }) => (
         <Form onSubmit={handleSubmit}>
           <PointGroup
-            id={id}
-            {...values}
             {...props}
             isEditMode={isEditMode}
             applyChanges={handleSubmit}
             onAddPoint={handleOnAddPoint}
-            onEdit={handleOnEdit}
-            disabled={false}
+            onEdit={handleSeEditMode}
+            disabled={isLoading}
           />
         </Form>
       )}

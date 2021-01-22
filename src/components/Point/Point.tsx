@@ -1,47 +1,43 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Button } from '@material-ui/core';
 import AdjustIcon from '@material-ui/icons/Adjust';
+import { useField } from 'formik';
 
-import { IPoint } from '../../interfaces';
 import { EditPoint } from '../EditPoint';
 
-interface IPointProps extends IPoint {
+export interface IPointProps {
   disabled: boolean;
   index: number;
   isEditMode: boolean;
-  onPointToggle?: (id: string | number, checked: boolean) => void;
-  onPointDelete?: () => void;
+  onPointToggle: () => void;
+  onPointDelete: () => void;
 }
 
 export const Point = ({
   disabled,
-  id,
   index,
-  isActive,
   isEditMode,
-  name,
   onPointDelete,
   onPointToggle,
 }: IPointProps) => {
-  const handleOnClick = useCallback(() => {
-    onPointToggle && onPointToggle(id, !isActive);
-  }, [onPointToggle, id, isActive]);
+  const [nameField] = useField<string>(`points.${index}.name`);
+  const [isActiveField] = useField<boolean>(`points.${index}.isActive`);
 
   return isEditMode ? (
     <EditPoint
-      index={index}
       onPointDelete={onPointDelete}
-      name={name}
+      pointName={nameField.value}
       disabled={disabled}
+      {...nameField}
     />
   ) : (
     <Button
       variant="contained"
-      color={isActive ? 'primary' : 'default'}
+      color={isActiveField.value ? 'primary' : 'default'}
       startIcon={<AdjustIcon />}
-      onClick={handleOnClick}
+      onClick={onPointToggle}
     >
-      {name}
+      {nameField.value}
     </Button>
   );
 };
