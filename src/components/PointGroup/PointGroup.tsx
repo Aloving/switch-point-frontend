@@ -17,8 +17,8 @@ import { Points } from '../Points';
 export interface IPointGroupProps {
   disabled: boolean;
   isEditMode: boolean;
-  onAddPoint?: () => void;
-  onEdit?: () => void;
+  onAddPoint: () => void;
+  onEdit: () => void;
   applyChanges: () => void;
   onGroupUpdate?: (group: IPointGroup) => void;
 }

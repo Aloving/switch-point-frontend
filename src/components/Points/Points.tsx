@@ -19,6 +19,7 @@ export const Points: React.FC<IPointsProps> = ({ disabled, isEditMode }) => {
         return points.map((point, index) => (
           <div className={styles.point} key={point.id}>
             <PointContainer
+              key={point.id}
               disabled={disabled}
               index={index}
               isEditMode={isEditMode}
