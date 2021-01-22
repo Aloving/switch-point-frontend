@@ -2,7 +2,7 @@ import React from 'react';
 import { FieldArray } from 'formik';
 
 import { IPoint } from '../../interfaces';
-import { Point } from '../Point';
+import { PointContainer } from '../../containers';
 import styles from './Points.module.css';
 
 export interface IPointsProps {
@@ -18,12 +18,11 @@ export const Points: React.FC<IPointsProps> = ({ disabled, isEditMode }) => {
 
         return points.map((point, index) => (
           <div className={styles.point} key={point.id}>
-            <Point
-              {...point}
+            <PointContainer
               disabled={disabled}
               index={index}
               isEditMode={isEditMode}
-              onPointDelete={() => remove(index)}
+              deletePoint={() => remove(index)}
             />
           </div>
         ));

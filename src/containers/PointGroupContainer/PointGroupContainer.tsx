@@ -39,7 +39,7 @@ export const PointGroupContainer = ({
   }, []);
 
   return (
-    <Formik<Omit<IPointGroup, 'id'>>
+    <Formik<IPointGroupForm>
       initialValues={{ name, description, points }}
       onSubmit={handleSubmit}
       innerRef={formikRef}

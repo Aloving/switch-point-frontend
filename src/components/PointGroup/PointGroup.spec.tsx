@@ -10,11 +10,11 @@ import { Points } from '../Points';
 import { GroupCard } from '../GroupCard';
 import { GroupBox } from '../GroupBox';
 
-import { IPointGroup } from '../../interfaces';
+import { IPointGroupForm } from '../../interfaces';
 
 const getWrapper = (props = {}) => {
   return mount(
-    <Formik<Omit<IPointGroup, 'id'>>
+    <Formik<IPointGroupForm>
       initialValues={{
         points: [],
         name: 'testName',
