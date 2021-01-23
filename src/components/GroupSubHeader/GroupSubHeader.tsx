@@ -5,33 +5,27 @@ import { TextField, Box } from '@material-ui/core';
 interface IGroupSubHeaderProps {
   disabled: boolean;
   isEditMode: boolean;
-  description?: string;
 }
 
 export const GroupSubHeader = ({
-  description,
   disabled,
   isEditMode,
 }: IGroupSubHeaderProps) => {
-  return isEditMode ? (
-    <Field
-      name="description"
-      render={({ field }: FieldProps<string>) => (
+  return (
+    <Field name="description">
+      {({ field }: FieldProps<string>) => (
         <Box mt={1}>
-          <TextField
-            size="small"
-            variant="outlined"
-            disabled={disabled}
-            {...field}
-          />
+          {isEditMode && (
+            <TextField
+              size="small"
+              variant="outlined"
+              disabled={disabled}
+              {...field}
+            />
+          )}
+          {!isEditMode && <>{field.value}</>}
         </Box>
       )}
-    />
-  ) : (
-    <>{description}</>
+    </Field>
   );
-};
-
-GroupSubHeader.defaulProps = {
-  description: '',
 };

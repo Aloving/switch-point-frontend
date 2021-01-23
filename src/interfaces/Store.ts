@@ -1,3 +1,1 @@
-export interface ISoreState {
-  pointGroup: any;
-}
+export interface IStoreState {}

@@ -1,39 +1,35 @@
 import React from 'react';
 import {
-  Card,
   CardHeader,
   CardContent,
   Divider,
-  Box,
   CardActions,
 } from '@material-ui/core';
-import { FieldArray } from 'formik';
 
-import { IPointGroup } from '../../interfaces';
-import { Point } from '../Point';
 import { GroupSubHeader } from '../GroupSubHeader';
 import { GroupTitle } from '../GroupTitle';
 import { Actions } from '../Actions';
-import styles from './PointGroup.module.css';
+import { GroupBox } from '../GroupBox';
+import { GroupCard } from '../GroupCard';
+import { Points } from '../Points';
 
-export interface IPointGroupProps extends IPointGroup {
+import { IPointGroup } from '../../interfaces';
+
+export interface IPointGroupProps {
   disabled: boolean;
   isEditMode: boolean;
-  onAddPoint?: () => void;
-  onEdit?: () => void;
+  onAddPoint: () => void;
+  onEdit: () => void;
   applyChanges: () => void;
   onGroupUpdate?: (group: IPointGroup) => void;
 }
 
 export const PointGroup = ({
   applyChanges,
-  description,
   disabled,
   isEditMode,
-  name,
   onAddPoint,
   onEdit,
-  points,
 }: IPointGroupProps) => {
   const renderActions = () => (
     <Actions
@@ -46,17 +42,11 @@ export const PointGroup = ({
   );
 
   return (
-    <Card variant={isEditMode ? 'elevation' : 'outlined'}>
-      <Box boxShadow={isEditMode ? 3 : 0}>
+    <GroupCard isEditMode={isEditMode}>
+      <GroupBox isEditMode={isEditMode}>
         <CardHeader
           action={renderActions()}
-          title={
-            <GroupTitle
-              title={name}
-              isEditMode={isEditMode}
-              disabled={disabled}
-            />
-          }
+          title={<GroupTitle isEditMode={isEditMode} disabled={disabled} />}
           titleTypographyProps={{
             align: 'left',
           }}
@@ -67,32 +57,12 @@ export const PointGroup = ({
             alignItems: 'end',
           }}
           subheader={
-            <GroupSubHeader
-              isEditMode={isEditMode}
-              description={description}
-              disabled={disabled}
-            />
+            <GroupSubHeader isEditMode={isEditMode} disabled={disabled} />
           }
         />
         <Divider variant="middle" />
         <CardContent>
-          <FieldArray
-            name="points"
-            render={(arrayHelpers) => {
-              return points.map((point, index) => (
-                <div className={styles.point}>
-                  <Point
-                    {...point}
-                    disabled={disabled}
-                    key={point.id}
-                    index={index}
-                    isEditMode={isEditMode}
-                    onPointDelete={() => arrayHelpers.remove(index)}
-                  />
-                </div>
-              ));
-            }}
-          />
+          <Points isEditMode={isEditMode} disabled={disabled} />
         </CardContent>
         {isEditMode && (
           <>
@@ -106,7 +76,7 @@ export const PointGroup = ({
             </CardActions>
           </>
         )}
-      </Box>
-    </Card>
+      </GroupBox>
+    </GroupCard>
   );
 };
