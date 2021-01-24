@@ -11,7 +11,7 @@ export interface IPointsProps {
   isEditMode: boolean;
 }
 
-export const Points = ({ disabled, isEditMode }: IPointsProps) => {
+export const Points: React.FC<IPointsProps> = ({ disabled, isEditMode }) => {
   return (
     <FieldArray name="points">
       {({ remove, form }) => {

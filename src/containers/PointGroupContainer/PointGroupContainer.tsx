@@ -6,6 +6,7 @@ import { PointGroup } from '../../components/PointGroup';
 import { createPoint } from '../../helpers';
 
 import { IPointGroup, IPointGroupForm } from '../../interfaces';
+
 export interface IPointGroupContainerProps extends IPointGroup {
   isEditMode: boolean;
   isLoading: boolean;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardProps } from '@material-ui/core';
 
-enum VariantEnum {
+enum Variant {
   ELEVATION = 'elevation',
   OUTLENED = 'outlined',
 }
@@ -17,7 +17,7 @@ export const GroupCard: React.FC<IGroupCardProps> = ({
 }) => {
   return (
     <Card
-      variant={isEditMode ? VariantEnum.ELEVATION : VariantEnum.OUTLENED}
+      variant={isEditMode ? Variant.ELEVATION : Variant.OUTLENED}
       {...props}
     >
       {children}

@@ -6,6 +6,7 @@ import { PointGroupContainer } from '../../containers';
 import { IPointGroup } from '../../interfaces';
 
 import styles from './Board.module.css';
+
 interface IBoardProps {
   lists: IPointGroup[];
   editId?: string | number;
