@@ -1,8 +1,10 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
 
-import { IPointGroup } from '../../interfaces';
 import { PointGroupContainer } from '../../containers';
+
+import { IPointGroup } from '../../interfaces';
+
 import styles from './Board.module.css';
 
 interface IBoardProps {

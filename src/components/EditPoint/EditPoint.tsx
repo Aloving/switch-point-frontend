@@ -7,8 +7,8 @@ import styles from './EditPoint.module.css';
 
 interface IEditPointProps extends FieldInputProps<string> {
   disabled: boolean;
-  onPointDelete?: () => void;
   pointName: string;
+  onPointDelete?: () => void;
 }
 
 export const EditPoint = ({

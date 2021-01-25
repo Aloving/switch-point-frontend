@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
 import { useField } from 'formik';
-import { IPoint } from '../../interfaces';
+
 import { Point } from '../../components/Point';
+
+import { IPoint } from '../../interfaces';
 
 interface IPointContainerProps {
   disabled: boolean;

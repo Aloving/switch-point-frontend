@@ -3,6 +3,7 @@ import { FieldArray } from 'formik';
 
 import { IPoint } from '../../interfaces';
 import { PointContainer } from '../../containers';
+
 import styles from './Points.module.css';
 
 export interface IPointsProps {

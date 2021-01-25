@@ -1,15 +1,17 @@
 import React, { useCallback, useRef } from 'react';
 import { Formik, Form, FormikProps } from 'formik';
 
-import { IPointGroup, IPointGroupForm } from '../../interfaces';
 import { PointGroup } from '../../components/PointGroup';
+
 import { createPoint } from '../../helpers';
+
+import { IPointGroup, IPointGroupForm } from '../../interfaces';
 
 export interface IPointGroupContainerProps extends IPointGroup {
   isEditMode: boolean;
+  isLoading: boolean;
   applyChanges?: (group: IPointGroup) => void;
   setEditMode?: (groupId: IPointGroup['id']) => void;
-  isLoading: boolean;
 }
 
 export const PointGroupContainer = ({

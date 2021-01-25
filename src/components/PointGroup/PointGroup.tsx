@@ -6,13 +6,14 @@ import {
   CardActions,
 } from '@material-ui/core';
 
-import { IPointGroup } from '../../interfaces';
 import { GroupSubHeader } from '../GroupSubHeader';
 import { GroupTitle } from '../GroupTitle';
 import { Actions } from '../Actions';
 import { GroupBox } from '../GroupBox';
 import { GroupCard } from '../GroupCard';
 import { Points } from '../Points';
+
+import { IPointGroup } from '../../interfaces';
 
 export interface IPointGroupProps {
   disabled: boolean;
