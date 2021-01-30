@@ -5,3 +5,6 @@ export * from './Store';
 export * from './HttpTransportOptions';
 export * from './ApiResponse';
 export * from './HttpTransport';
+export * from './AuthTransport';
+export * from './LoginRequestPayload';
+export * from './TokenResponse';

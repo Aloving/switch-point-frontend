@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 import {
-  IApiResponseInterface,
+  IApiResponse,
   IHttpTransport,
   IHttpTransportOptions,
 } from '../interfaces';
@@ -9,9 +9,7 @@ import {
 class HttpTransport implements IHttpTransport {
   private readonly _client: AxiosInstance = axios.create();
 
-  async makeRequest<R>(
-    config: AxiosRequestConfig,
-  ): Promise<IApiResponseInterface<R>> {
+  async makeRequest<R>(config: AxiosRequestConfig): Promise<IApiResponse<R>> {
     const { data: responseData } = await this._client(config);
 
     return responseData;
@@ -20,7 +18,7 @@ class HttpTransport implements IHttpTransport {
   async delete<R = any>(
     url: string,
     config?: IHttpTransportOptions,
-  ): Promise<IApiResponseInterface<R>> {
+  ): Promise<IApiResponse<R>> {
     const { data: responseData } = await this._client.delete(url, config);
 
     return responseData;
@@ -29,7 +27,7 @@ class HttpTransport implements IHttpTransport {
   async get<R = any>(
     url: string,
     config?: IHttpTransportOptions,
-  ): Promise<IApiResponseInterface<R>> {
+  ): Promise<IApiResponse<R>> {
     const { data: responseData } = await this._client.get(url, config);
 
     return responseData;
@@ -39,7 +37,7 @@ class HttpTransport implements IHttpTransport {
     url: string,
     data?: D,
     config?: IHttpTransportOptions,
-  ): Promise<IApiResponseInterface<R>> {
+  ): Promise<IApiResponse<R>> {
     const { data: responseData } = await this._client.post(url, data, config);
 
     return responseData;
@@ -49,7 +47,7 @@ class HttpTransport implements IHttpTransport {
     url: string,
     data?: D,
     config?: IHttpTransportOptions,
-  ): Promise<IApiResponseInterface<R>> {
+  ): Promise<IApiResponse<R>> {
     const { data: responseData } = await this._client.put(url, data, config);
 
     return responseData;
@@ -59,7 +57,7 @@ class HttpTransport implements IHttpTransport {
     url: string,
     data?: D,
     config?: IHttpTransportOptions,
-  ): Promise<IApiResponseInterface<R>> {
+  ): Promise<IApiResponse<R>> {
     const { data: responseData } = await this._client.patch(url, data, config);
 
     return responseData;
@@ -73,9 +71,7 @@ class HttpTransport implements IHttpTransport {
   }
 
   responseMiddleware(
-    onFulfilled: (
-      value: IApiResponseInterface,
-    ) => IApiResponseInterface | Promise<IApiResponseInterface>,
+    onFulfilled: (value: IApiResponse) => IApiResponse | Promise<IApiResponse>,
     onRejected: (error: any, retry?: boolean) => any,
   ): void {
     this._client.interceptors.response.use((resp) => {
