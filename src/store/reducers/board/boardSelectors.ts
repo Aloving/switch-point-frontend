@@ -11,6 +11,10 @@ export const selectLists = createSelector(
   selectBoardSlice,
   (board) => board.lists,
 );
+export const selectIsLoading = createSelector(
+  selectLists,
+  (board) => board.isLoading,
+);
 export const selectPointGroups = createSelector(
   selectLists,
   (board) => board.data,

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { PointGroup } from '../../components/PointGroup';
 
-import { createPoint } from '../../helpers';
+import { useGroupFormHelpers } from '../../helpers';
 
 import { IPointGroup, IPointGroupForm } from '../../interfaces';
 import { boardActions } from '../../store/reducers/board';
@@ -12,9 +12,11 @@ import { boardActions } from '../../store/reducers/board';
 export interface IPointGroupContainerProps extends IPointGroup {
   isEditMode: boolean;
   isLoading: boolean;
-  applyChanges?: (group: IPointGroup) => void;
-  setEditMode: (groupId: IPointGroup['id']) => void;
   resetEditMode: () => void;
+
+  applyChanges?: (group: IPointGroup) => void;
+  deleteGroup: (groupId: IPointGroup['id']) => void;
+  setEditMode: (groupId: IPointGroup['id']) => void;
 }
 
 export const PointGroupContainerPure = ({
@@ -27,11 +29,16 @@ export const PointGroupContainerPure = ({
   points,
   resetEditMode,
   setEditMode,
+  deleteGroup,
   ...props
 }: IPointGroupContainerProps) => {
   const formikRef = useRef<FormikProps<IPointGroupForm>>(null);
-  // @todo remove fake state, there will be a global edit mode callback
-  const handleSeEditMode = useCallback(() => {
+  const { addNewPoint } = useGroupFormHelpers(formikRef);
+
+  const handleDeleteGroup = useCallback(() => {
+    deleteGroup(id);
+  }, [deleteGroup, id]);
+  const handleSetEditMode = useCallback(() => {
     setEditMode && setEditMode(id);
   }, [id, setEditMode]);
   const handleSubmit = useCallback(
@@ -42,14 +49,9 @@ export const PointGroupContainerPure = ({
     [applyChanges, resetEditMode],
   );
   const handleOnAddPoint = useCallback(() => {
-    handleSeEditMode();
-    if (formikRef.current) {
-      const currentPoints = formikRef.current.values.points;
-      const pointsHelpers = formikRef.current.getFieldHelpers('points');
-
-      pointsHelpers.setValue([...currentPoints, createPoint({ name: '' })]);
-    }
-  }, [handleSeEditMode, formikRef]);
+    handleSetEditMode();
+    addNewPoint();
+  }, [handleSetEditMode, addNewPoint]);
 
   return (
     <Formik<IPointGroupForm>
@@ -65,8 +67,9 @@ export const PointGroupContainerPure = ({
             isEditMode={isEditMode}
             applyChanges={handleSubmit}
             onAddPoint={handleOnAddPoint}
-            onEdit={handleSeEditMode}
+            onEdit={handleSetEditMode}
             disabled={isLoading}
+            onDelete={handleDeleteGroup}
           />
         </Form>
       )}
@@ -76,8 +79,9 @@ export const PointGroupContainerPure = ({
 
 const mapDispatchToProps = {
   applyChanges: boardActions.updateGroup,
-  setEditMode: boardActions.setEditMode,
+  deleteGroup: boardActions.deleteGroup,
   resetEditMode: boardActions.resetEditMode,
+  setEditMode: boardActions.setEditMode,
 };
 
 export const PointGroupContainer = connect(

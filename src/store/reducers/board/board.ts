@@ -71,6 +71,10 @@ const editModeReducer = createReducer(initialState.editMode)
   .handleAction(boardActions.resetEditMode, () => initialState.editMode);
 
 const listsReducer = createReducer(initialState.lists)
+  .handleAction(boardActions.deleteGroup, (state, { payload }) => ({
+    ...state,
+    data: state.data.filter((group) => group.id !== payload.id),
+  }))
   .handleAction(boardActions.fetchGroupsRequest, (state) => ({
     ...state,
     isLoading: true,

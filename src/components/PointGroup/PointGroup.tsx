@@ -13,15 +13,13 @@ import { GroupBox } from '../GroupBox';
 import { GroupCard } from '../GroupCard';
 import { Points } from '../Points';
 
-import { IPointGroup } from '../../interfaces';
-
 export interface IPointGroupProps {
   disabled: boolean;
   isEditMode: boolean;
   onAddPoint: () => void;
-  onEdit: () => void;
+  onEdit?: () => void;
   applyChanges: () => void;
-  onGroupUpdate?: (group: IPointGroup) => void;
+  onDelete: () => void;
 }
 
 export const PointGroup = ({
@@ -29,6 +27,7 @@ export const PointGroup = ({
   disabled,
   isEditMode,
   onAddPoint,
+  onDelete,
   onEdit,
 }: IPointGroupProps) => {
   const renderActions = () => (
@@ -38,6 +37,7 @@ export const PointGroup = ({
       onAdd={onAddPoint}
       onEdit={onEdit}
       onSave={applyChanges}
+      onDelete={onDelete}
     />
   );
 

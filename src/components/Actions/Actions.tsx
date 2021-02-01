@@ -11,12 +11,14 @@ interface ActionsProps {
   onAdd?: () => void;
   onEdit?: () => void;
   onSave?: () => void;
+  onDelete?: () => void;
 }
 
 export const Actions = ({
   disabled,
   isEditMode,
   onAdd,
+  onDelete,
   onEdit,
   onSave,
 }: ActionsProps) => {
@@ -33,7 +35,7 @@ export const Actions = ({
         </IconButton>
       )}
       {isEditMode && (
-        <IconButton onClick={onSave} disabled={disabled}>
+        <IconButton onClick={onDelete} disabled={disabled}>
           <DeleteIcon color="secondary" />
         </IconButton>
       )}
