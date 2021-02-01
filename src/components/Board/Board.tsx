@@ -11,12 +11,9 @@ interface IBoardProps {
   lists: IPointGroup[];
   editId: string | null;
   onListAdd?: (name: string, description: string) => void;
-  onPointAdd?: (groupId: string, name: string, description: string) => void;
-  onListUpdate?: (payload: IPointGroup) => void;
-  setEditMode: (id: string) => void;
 }
 
-export const Board = ({ lists, editId, setEditMode }: IBoardProps) => {
+export const Board = ({ lists, editId }: IBoardProps) => {
   return (
     <div className={styles.root}>
       {lists.map(({ id, name, description, points }) => (
@@ -28,7 +25,6 @@ export const Board = ({ lists, editId, setEditMode }: IBoardProps) => {
             points={points}
             isLoading={false}
             isEditMode={id === editId}
-            setEditMode={setEditMode}
           />
         </div>
       ))}

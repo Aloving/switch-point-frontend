@@ -1,20 +1,23 @@
 import React, { useCallback, useRef } from 'react';
 import { Formik, Form, FormikProps } from 'formik';
+import { connect } from 'react-redux';
 
 import { PointGroup } from '../../components/PointGroup';
 
 import { createPoint } from '../../helpers';
 
 import { IPointGroup, IPointGroupForm } from '../../interfaces';
+import { boardActions } from '../../store/reducers/board';
 
 export interface IPointGroupContainerProps extends IPointGroup {
   isEditMode: boolean;
   isLoading: boolean;
   applyChanges?: (group: IPointGroup) => void;
   setEditMode: (groupId: IPointGroup['id']) => void;
+  resetEditMode: () => void;
 }
 
-export const PointGroupContainer = ({
+export const PointGroupContainerPure = ({
   applyChanges,
   description,
   id,
@@ -22,6 +25,7 @@ export const PointGroupContainer = ({
   isLoading,
   name,
   points,
+  resetEditMode,
   setEditMode,
   ...props
 }: IPointGroupContainerProps) => {
@@ -32,9 +36,10 @@ export const PointGroupContainer = ({
   }, [id, setEditMode]);
   const handleSubmit = useCallback(
     (values) => {
+      resetEditMode();
       applyChanges && applyChanges({ ...values, id });
     },
-    [applyChanges],
+    [applyChanges, resetEditMode],
   );
   const handleOnAddPoint = useCallback(() => {
     handleSeEditMode();
@@ -68,3 +73,14 @@ export const PointGroupContainer = ({
     </Formik>
   );
 };
+
+const mapDispatchToProps = {
+  applyChanges: boardActions.updateGroup,
+  setEditMode: boardActions.setEditMode,
+  resetEditMode: boardActions.resetEditMode,
+};
+
+export const PointGroupContainer = connect(
+  null,
+  mapDispatchToProps,
+)(PointGroupContainerPure);

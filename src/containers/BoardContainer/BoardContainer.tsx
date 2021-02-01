@@ -12,11 +12,10 @@ interface IBoardContainerPureProps {
 }
 
 export const BoardContainerPure = ({
-  setEditMode,
   editId,
   lists,
 }: IBoardContainerPureProps) => {
-  return <Board lists={lists} setEditMode={setEditMode} editId={editId} />;
+  return <Board lists={lists} editId={editId} />;
 };
 
 const mapStateToProps = (state: IStoreState) => ({
