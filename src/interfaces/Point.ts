@@ -1,5 +1,5 @@
 export interface IPoint {
-  id: number | string;
+  id: string;
   name: string;
   isActive: boolean;
   pointGroupId: string;

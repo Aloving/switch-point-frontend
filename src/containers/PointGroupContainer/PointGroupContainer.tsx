@@ -11,7 +11,7 @@ export interface IPointGroupContainerProps extends IPointGroup {
   isEditMode: boolean;
   isLoading: boolean;
   applyChanges?: (group: IPointGroup) => void;
-  setEditMode?: (groupId: IPointGroup['id']) => void;
+  setEditMode: (groupId: IPointGroup['id']) => void;
 }
 
 export const PointGroupContainer = ({
@@ -51,6 +51,7 @@ export const PointGroupContainer = ({
       initialValues={{ name, description, points }}
       onSubmit={handleSubmit}
       innerRef={formikRef}
+      enableReinitialize
     >
       {({ handleSubmit }) => (
         <Form onSubmit={handleSubmit}>
