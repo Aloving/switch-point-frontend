@@ -1,3 +1,5 @@
+import qs from 'qs';
+
 import { ApiResponseEnum } from '../enums/ApiResponse';
 import { HttpStatus } from '../enums/HttpStatus';
 import {
@@ -41,85 +43,6 @@ export class AuthTransport implements IAuthTransport {
 
   private getAuthorizationHeader(): string {
     return `Bearer ${this.token}`;
-  }
-
-  // TODO: add qs
-  private subscribeConfig(
-    config?: IHttpTransportOptions,
-  ): IHttpTransportOptions {
-    const newConfig = config || { headers: {} };
-
-    return {
-      ...newConfig,
-      headers: {
-        ...newConfig.headers,
-        Authorization: this.getAuthorizationHeader(),
-      },
-    };
-  }
-
-  async login({
-    login,
-    password,
-  }: ILoginRequestPayload): Promise<IApiResponse<ITokensResponse>> {
-    const response = await this.client.post<ITokensResponse>('/auth/login', {
-      login,
-      password,
-    });
-    const { status, data } = response;
-    if (status === ApiResponseEnum.SUCCESS) {
-      this.token = data.accessToken;
-      this.refreshToken = data.refreshToken;
-      this.onLoginSubscribers.forEach((subscriber) => {
-        if (typeof subscriber === 'function') {
-          subscriber();
-        }
-      });
-    }
-
-    return response;
-  }
-
-  logout = () => {
-    this.clearToken();
-
-    this.onLogoutSubscribers.forEach((subscriber) => {
-      if (typeof subscriber === 'function') {
-        subscriber();
-      }
-    });
-  };
-
-  private clearToken(): void {
-    this.token = null;
-    this.refreshToken = null;
-  }
-
-  private setToken({
-    accessToken,
-    refreshToken,
-  }: {
-    accessToken: string;
-    refreshToken: string;
-  }): void {
-    this.token = accessToken;
-    this.refreshToken = refreshToken;
-  }
-
-  getToken(): Partial<ITokensResponse> {
-    return {
-      accessToken: this.token || undefined,
-      refreshToken: this.refreshToken || undefined,
-    };
-  }
-
-  updateToken(refreshToken: string): Promise<IApiResponse<ITokensResponse>> {
-    return this.client.post<ITokensResponse, { refreshToken: string }>(
-      '/auth/refreshToken',
-      {
-        refreshToken,
-      },
-    );
   }
 
   private onInit(): void {
@@ -172,6 +95,86 @@ export class AuthTransport implements IAuthTransport {
         };
 
         return this.client.makeRequest(newRequest);
+      },
+    );
+  }
+
+  // TODO: add qs
+  private subscribeConfig(
+    config?: IHttpTransportOptions,
+  ): IHttpTransportOptions {
+    const newConfig = config || { headers: {} };
+
+    return {
+      ...newConfig,
+      headers: {
+        ...newConfig.headers,
+        Authorization: this.getAuthorizationHeader(),
+      },
+      paramsSerializer: (prm: any) => qs.stringify(prm, {arrayFormat: 'repeat'});
+    };
+  }
+
+  private clearToken(): void {
+    this.token = null;
+    this.refreshToken = null;
+  }
+
+  private setToken({
+    accessToken,
+    refreshToken,
+  }: {
+    accessToken: string;
+    refreshToken: string;
+  }): void {
+    this.token = accessToken;
+    this.refreshToken = refreshToken;
+  }
+
+  async login({
+    login,
+    password,
+  }: ILoginRequestPayload): Promise<IApiResponse<ITokensResponse>> {
+    const response = await this.client.post<ITokensResponse>('/auth/login', {
+      login,
+      password,
+    });
+    const { status, data } = response;
+    if (status === ApiResponseEnum.SUCCESS) {
+      this.token = data.accessToken;
+      this.refreshToken = data.refreshToken;
+      this.onLoginSubscribers.forEach((subscriber) => {
+        if (typeof subscriber === 'function') {
+          subscriber();
+        }
+      });
+    }
+
+    return response;
+  }
+
+  logout = () => {
+    this.clearToken();
+
+    this.onLogoutSubscribers.forEach((subscriber) => {
+      if (typeof subscriber === 'function') {
+        subscriber();
+      }
+    });
+  };
+
+  getToken(): Partial<ITokensResponse> {
+    return {
+      accessToken: this.token || undefined,
+      refreshToken: this.refreshToken || undefined,
+    };
+  }
+
+  updateToken(refreshToken: string): Promise<IApiResponse<ITokensResponse>> {
+    return this.client.post<ITokensResponse, { refreshToken: string }>(
+      '/auth/refreshToken',
+      {
+        refreshToken,
       },
     );
   }
