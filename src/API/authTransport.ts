@@ -99,7 +99,6 @@ export class AuthTransport implements IAuthTransport {
     );
   }
 
-  // TODO: add qs
   private subscribeConfig(
     config?: IHttpTransportOptions,
   ): IHttpTransportOptions {
@@ -111,7 +110,8 @@ export class AuthTransport implements IAuthTransport {
         ...newConfig.headers,
         Authorization: this.getAuthorizationHeader(),
       },
-      paramsSerializer: (prm: any) => qs.stringify(prm, {arrayFormat: 'repeat'});
+      paramsSerializer: (param: any) =>
+        qs.stringify(param, { arrayFormat: 'repeat' }),
     };
   }
 
