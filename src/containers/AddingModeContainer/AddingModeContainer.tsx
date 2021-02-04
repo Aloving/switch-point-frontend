@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import { IPointGroup, IStoreState } from '../../interfaces';
 
-import { AddingMode } from '../../components';
 import { selectIsLoading, selectEditId, boardActions } from '../../store';
+import { AddingMode } from '../../components';
 
 interface IAddingModeContainerProps {
   isLoading: boolean;

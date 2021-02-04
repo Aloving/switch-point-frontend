@@ -1,4 +1,4 @@
-import { BoardState } from '../store/reducers';
+import { BoardState } from '../store';
 
 export interface IStoreState {
   board: BoardState;

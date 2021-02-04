@@ -1,4 +1,4 @@
-import { boardActions } from './reducers/board';
+import { boardActions } from './reducers';
 
 export const rootAction = {
   boardActions,

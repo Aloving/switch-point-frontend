@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { FormikProps } from 'formik';
 
-import { createPoint } from './createPoint';
-
 import { IPointGroupForm } from '../interfaces';
+
+import { createPoint } from './createPoint';
 
 export function useGroupFormHelpers(
   formikRef: React.RefObject<FormikProps<IPointGroupForm>>,

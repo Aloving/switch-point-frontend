@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { IPointGroup, IStoreState } from '../../interfaces';
+
 import { boardActions, selectEditId, selectPointGroups } from '../../store';
 import { Board } from '../../components';
-import { IPointGroup, IStoreState } from '../../interfaces';
 
 interface IBoardContainerPureProps {
   setEditMode: (id: string) => void;

@@ -1,5 +1,7 @@
 import { createAction, createAsyncAction } from 'typesafe-actions';
 
+import { IPointGroup } from '../../../interfaces';
+
 import {
   CREATE_GROUP,
   DELETE_GROUP,
@@ -11,7 +13,6 @@ import {
   TOGGLE_ACTIVE_POINT,
   UPDATE_GROUP,
 } from './constants';
-import { IPointGroup } from '../../../interfaces';
 
 const createGroup = createAction(
   CREATE_GROUP,

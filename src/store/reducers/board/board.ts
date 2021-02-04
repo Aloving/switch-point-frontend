@@ -1,9 +1,9 @@
 import { createReducer } from 'typesafe-actions';
-
-import { boardActions } from './boardActions';
+import { combineReducers } from 'redux';
 
 import { BoardState } from './interfaces';
-import { combineReducers } from 'redux';
+
+import { boardActions } from './boardActions';
 
 const initialState: BoardState = {
   editMode: null,

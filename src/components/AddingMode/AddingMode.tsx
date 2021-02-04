@@ -1,8 +1,9 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Formik, Form, FormikProps } from 'formik';
 
-import { createNewGroup, useGroupFormHelpers } from '../../helpers';
 import { IPointGroup, IPointGroupForm } from '../../interfaces';
+
+import { createNewGroup, useGroupFormHelpers } from '../../helpers';
 import { PointGroup } from '../PointGroup';
 
 export interface IAddingModeProps {
@@ -21,16 +22,10 @@ export const AddingMode = ({
 }: IAddingModeProps) => {
   const formikRef = useRef<FormikProps<IPointGroupForm>>(null);
   const { addNewPoint } = useGroupFormHelpers(formikRef);
-  const handleSubmit = useCallback(
-    (values) => {
-      createGroup(values);
-    },
-    [createGroup],
-  );
 
   return (
     <Formik
-      onSubmit={handleSubmit}
+      onSubmit={createGroup}
       initialValues={createNewGroup({})}
       innerRef={formikRef}
     >
