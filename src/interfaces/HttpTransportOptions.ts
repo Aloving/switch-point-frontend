@@ -3,5 +3,4 @@ export interface IHttpTransportOptions {
     [key: string]: any;
     Authorization?: string;
   };
-  paramsSerializer?: (param: any) => string;
 }

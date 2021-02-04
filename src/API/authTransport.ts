@@ -110,8 +110,6 @@ export class AuthTransport implements IAuthTransport {
         ...newConfig.headers,
         Authorization: this.getAuthorizationHeader(),
       },
-      paramsSerializer: (param: any) =>
-        qs.stringify(param, { arrayFormat: 'repeat' }),
     };
   }
 
