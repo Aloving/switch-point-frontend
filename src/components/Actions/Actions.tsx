@@ -8,20 +8,21 @@ import DeleteIcon from '@material-ui/icons/Delete';
 interface ActionsProps {
   disabled: boolean;
   isEditMode: boolean;
+
   onAdd?: () => void;
   onEdit?: () => void;
   onSave?: () => void;
   onDelete?: () => void;
 }
 
-export const Actions = ({
+export const Actions: React.FC<ActionsProps> = ({
   disabled,
   isEditMode,
   onAdd,
   onDelete,
   onEdit,
   onSave,
-}: ActionsProps) => {
+}) => {
   return (
     <>
       {isEditMode && (
