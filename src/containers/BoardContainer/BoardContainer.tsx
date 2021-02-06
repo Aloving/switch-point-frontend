@@ -1,22 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { IPointGroup, IStoreState } from '../../interfaces';
-
 import { boardActions, selectEditId, selectPointGroups } from '../../store';
 import { Board } from '../../components';
 
+import { IPointGroup, IStoreState } from '../../interfaces';
+
 interface IBoardContainerPureProps {
-  setEditMode: (id: string) => void;
   editId: string | null;
   lists: IPointGroup[];
+
+  setEditMode: (id: string) => void;
+  resetEditMode: () => void;
 }
 
 export const BoardContainerPure = ({
   editId,
   lists,
+  resetEditMode,
 }: IBoardContainerPureProps) => {
-  return <Board lists={lists} editId={editId} />;
+  return <Board lists={lists} editId={editId} resetEditMode={resetEditMode} />;
 };
 
 const mapStateToProps = (state: IStoreState) => ({
@@ -25,6 +28,7 @@ const mapStateToProps = (state: IStoreState) => ({
 });
 const mapDispatchToProps = {
   setEditMode: boardActions.setEditMode,
+  resetEditMode: boardActions.resetEditMode,
 };
 
 export const BoardContainer = connect(

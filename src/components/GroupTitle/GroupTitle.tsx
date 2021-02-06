@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Field, FieldProps, useField } from 'formik';
+import { useField } from 'formik';
 import { Box, TextField } from '@material-ui/core';
 
 interface IGroupTitleProps {

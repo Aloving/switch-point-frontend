@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
 import { Formik, Form, FormikProps } from 'formik';
 
-import { IPointGroup, IPointGroupForm } from '../../interfaces';
-
 import { createNewGroup, useGroupFormHelpers } from '../../helpers';
 import { PointGroup } from '../PointGroup';
+
+import { IPointGroup, IPointGroupForm } from '../../interfaces';
 
 export interface IAddingModeProps {
   isLoading: boolean;

@@ -2,11 +2,11 @@ import React, { useCallback, useRef } from 'react';
 import { Formik, Form, FormikProps } from 'formik';
 import { connect } from 'react-redux';
 
-import { IPointGroup, IPointGroupForm } from '../../interfaces';
-
 import { useGroupFormHelpers } from '../../helpers';
 import { boardActions } from '../../store';
 import { PointGroup } from '../../components';
+
+import { IPointGroup, IPointGroupForm } from '../../interfaces';
 
 export interface IPointGroupContainerProps extends IPointGroup {
   isEditMode: boolean;

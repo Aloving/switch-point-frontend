@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button } from '@material-ui/core';
 
 import { AddingModeContainer, PointGroupContainer } from '../../containers';
 
-import { IPointGroup } from '../../interfaces';
-
 import styles from './Board.module.css';
+
+import { IPointGroup } from '../../interfaces';
 
 interface IBoardProps {
   lists: IPointGroup[];
   editId: string | null;
+  resetEditMode: () => void;
 }
 
-export const Board = ({ lists, editId }: IBoardProps) => {
+export const Board = ({ lists, editId, resetEditMode }: IBoardProps) => {
   const [addingModeOn, setAddingMode] = useState(false);
+  const activateAddingMode = useCallback(() => {
+    setAddingMode(true);
+    resetEditMode();
+  }, [setAddingMode, resetEditMode]);
 
   return (
     <div className={styles.root}>
@@ -35,7 +40,7 @@ export const Board = ({ lists, editId }: IBoardProps) => {
             variant="outlined"
             color="primary"
             size="large"
-            onClick={() => setAddingMode(true)}
+            onClick={() => activateAddingMode()}
           >
             +
           </Button>

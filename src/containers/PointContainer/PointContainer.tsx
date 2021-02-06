@@ -2,10 +2,10 @@ import React, { useCallback } from 'react';
 import { useField } from 'formik';
 import { connect } from 'react-redux';
 
-import { IPoint, IPointGroup } from '../../interfaces';
-
 import { boardActions } from '../../store';
 import { Point } from '../../components';
+
+import { IPoint, IPointGroup } from '../../interfaces';
 
 interface IPointContainerProps {
   disabled: boolean;

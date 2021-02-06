@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 
-import { IPointGroup, IStoreState } from '../../interfaces';
-
 import { selectIsLoading, selectEditId, boardActions } from '../../store';
 import { AddingMode } from '../../components';
+
+import { IPointGroup, IStoreState } from '../../interfaces';
 
 interface IAddingModeContainerProps {
   isLoading: boolean;

@@ -1,10 +1,11 @@
 import React from 'react';
 import { FieldArray } from 'formik';
 
-import { IPoint } from '../../interfaces';
 import { PointContainer } from '../../containers';
 
 import styles from './Points.module.css';
+
+import { IPoint } from '../../interfaces';
 
 export interface IPointsProps {
   disabled: boolean;
