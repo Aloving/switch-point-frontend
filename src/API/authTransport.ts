@@ -20,8 +20,8 @@ export class AuthTransport implements IAuthTransport {
   private token: string | null;
   private refreshToken: string | null;
   private window: Window;
-  private onLogoutSubscribers: unknown[] = [];
-  private onLoginSubscribers: unknown[] = [];
+  private onLogoutSubscribers: { (...args: any): void }[] = [];
+  private onLoginSubscribers: { (...args: any): void }[] = [];
   public client: IHttpTransport;
 
   constructor({
@@ -139,11 +139,7 @@ export class AuthTransport implements IAuthTransport {
     if (status === ApiResponseEnum.SUCCESS) {
       this.token = data.accessToken;
       this.refreshToken = data.refreshToken;
-      this.onLoginSubscribers.forEach((subscriber) => {
-        if (typeof subscriber === 'function') {
-          subscriber();
-        }
-      });
+      this.onLoginSubscribers.forEach((subscriber) => subscriber());
     }
 
     return response;
@@ -152,11 +148,7 @@ export class AuthTransport implements IAuthTransport {
   logout = () => {
     this.clearToken();
 
-    this.onLogoutSubscribers.forEach((subscriber) => {
-      if (typeof subscriber === 'function') {
-        subscriber();
-      }
-    });
+    this.onLogoutSubscribers.forEach((subscriber) => subscriber());
   };
 
   getToken(): Partial<ITokensResponse> {
