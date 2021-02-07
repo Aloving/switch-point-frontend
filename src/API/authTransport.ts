@@ -151,10 +151,10 @@ export class AuthTransport implements IAuthTransport {
     this.onLogoutSubscribers.forEach((subscriber) => subscriber());
   };
 
-  getToken(): Partial<ITokensResponse> {
+  getToken(): ITokensResponse {
     return {
-      accessToken: this.token || undefined,
-      refreshToken: this.refreshToken || undefined,
+      accessToken: this.token || '',
+      refreshToken: this.refreshToken || '',
     };
   }
 
