@@ -16,6 +16,8 @@ interface IAuthTransportOptions {
   refreshToken?: string | null;
 }
 
+const REFRESH_TOKEN_URL = '/auth/refreshToken';
+
 export class AuthTransport implements IAuthTransport {
   private token: string | null;
   private refreshToken: string | null;
@@ -157,10 +159,10 @@ export class AuthTransport implements IAuthTransport {
       refreshToken: this.refreshToken || '',
     };
   }
-
+  // @todo To the future bros
   updateToken(refreshToken: string): Promise<IApiResponse<ITokensResponse>> {
     return this.client.post<ITokensResponse, { refreshToken: string }>(
-      '/auth/refreshToken',
+      REFRESH_TOKEN_URL,
       {
         refreshToken,
       },
