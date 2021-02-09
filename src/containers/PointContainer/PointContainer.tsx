@@ -1,22 +1,28 @@
 import React, { useCallback } from 'react';
 import { useField } from 'formik';
+import { connect } from 'react-redux';
 
-import { Point } from '../../components/Point';
+import { boardActions } from '../../store';
+import { Point } from '../../components';
 
-import { IPoint } from '../../interfaces';
+import { IPoint, IPointGroup } from '../../interfaces';
 
 interface IPointContainerProps {
   disabled: boolean;
   index: number;
   isEditMode: boolean;
-  togglePoint?: (id: IPoint['id'], checked: boolean) => void;
+  togglePoint?: (payload: {
+    id: IPoint['id'];
+    groupId: IPointGroup['id'];
+    isActive: boolean;
+  }) => void;
   deletePoint?: (
     id: IPoint['id'],
     pointGroupId: IPoint['pointGroupId'],
   ) => void;
 }
 
-export const PointContainer = ({
+export const PointContainerPure = ({
   deletePoint,
   disabled,
   index,
@@ -26,11 +32,16 @@ export const PointContainer = ({
   const [pointField] = useField<IPoint>(`points.${index}`);
   const pointData = pointField.value;
   const handleOnPointToggle = useCallback(() => {
-    togglePoint && togglePoint(pointData.id, !pointData.isActive);
-  }, [pointField]);
+    togglePoint &&
+      togglePoint({
+        id: pointData.id,
+        groupId: pointData.pointGroupId,
+        isActive: !pointData.isActive,
+      });
+  }, [togglePoint, pointData]);
   const handleOnPointDelete = useCallback(() => {
     deletePoint && deletePoint(pointData.id, pointData.pointGroupId);
-  }, [deletePoint]);
+  }, [deletePoint, pointData]);
 
   return (
     <Point
@@ -42,3 +53,12 @@ export const PointContainer = ({
     />
   );
 };
+
+const mapDispatchToProps = {
+  togglePoint: boardActions.toggleActivePoint,
+};
+
+export const PointContainer = connect(
+  null,
+  mapDispatchToProps,
+)(PointContainerPure);

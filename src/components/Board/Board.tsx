@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button } from '@material-ui/core';
 
-import { PointGroupContainer } from '../../containers';
-
-import { IPointGroup } from '../../interfaces';
+import { AddingModeContainer, PointGroupContainer } from '../../containers';
 
 import styles from './Board.module.css';
 
+import { IPointGroup } from '../../interfaces';
+
 interface IBoardProps {
   lists: IPointGroup[];
-  editId?: string | number;
-  onListAdd?: (name: string, description: string) => void;
-  onPointAdd?: (groupId: string, name: string, description: string) => void;
-  onListUpdate?: (payload: IPointGroup) => void;
+  editId: string | null;
+  resetEditMode: () => void;
 }
 
-export const Board = ({ lists, editId }: IBoardProps) => {
+export const Board = ({ lists, editId, resetEditMode }: IBoardProps) => {
+  const [addingModeOn, setAddingMode] = useState(false);
+  const activateAddingMode = useCallback(() => {
+    setAddingMode(true);
+    resetEditMode();
+  }, [setAddingMode, resetEditMode]);
+
   return (
     <div className={styles.root}>
       {lists.map(({ id, name, description, points }) => (
@@ -31,9 +35,19 @@ export const Board = ({ lists, editId }: IBoardProps) => {
         </div>
       ))}
       <div className={styles.group}>
-        <Button variant="outlined" color="primary" size="large">
-          +
-        </Button>
+        {!addingModeOn && (
+          <Button
+            variant="outlined"
+            color="primary"
+            size="large"
+            onClick={() => activateAddingMode()}
+          >
+            +
+          </Button>
+        )}
+        {addingModeOn && (
+          <AddingModeContainer onClose={() => setAddingMode(false)} />
+        )}
       </div>
     </div>
   );

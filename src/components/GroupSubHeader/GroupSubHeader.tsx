@@ -19,6 +19,7 @@ export const GroupSubHeader = ({
             <TextField
               size="small"
               variant="outlined"
+              placeholder="description"
               disabled={disabled}
               {...field}
             />

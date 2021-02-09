@@ -1,5 +1,5 @@
-import React from 'react';
-import { Field, FieldProps } from 'formik';
+import React, { useEffect, useRef } from 'react';
+import { useField } from 'formik';
 import { Box, TextField } from '@material-ui/core';
 
 interface IGroupTitleProps {
@@ -8,21 +8,29 @@ interface IGroupTitleProps {
 }
 
 export const GroupTitle = ({ isEditMode, disabled }: IGroupTitleProps) => {
+  const [nameFormField] = useField('name');
+  const textFieldRef = useRef<HTMLInputElement>(null);
+  const nameValue = nameFormField.value;
+
+  useEffect(() => {
+    if (!nameValue && textFieldRef.current) {
+      textFieldRef.current.focus();
+    }
+  }, [nameValue, textFieldRef]);
+
   return (
-    <Field name="name">
-      {({ field }: FieldProps<string>) => (
-        <Box mb={1}>
-          {isEditMode && (
-            <TextField
-              size="small"
-              variant="outlined"
-              disabled={disabled}
-              {...field}
-            />
-          )}
-          {!isEditMode && <>{field.value}</>}
-        </Box>
+    <Box mb={1}>
+      {isEditMode && (
+        <TextField
+          size="small"
+          variant="outlined"
+          placeholder="name"
+          disabled={disabled}
+          inputRef={textFieldRef}
+          {...nameFormField}
+        />
       )}
-    </Field>
+      {!isEditMode && <>{nameValue}</>}
+    </Box>
   );
 };

@@ -30,4 +30,13 @@ describe('<GroupTitle />', () => {
     expect(wrapper.find(TextField).exists()).toBeFalsy();
     expect(wrapper.find(Box).contains('testName')).toBeTruthy();
   });
+
+  it('should render disabled TextField when disabled is passed', () => {
+    const wrapper = getWrapper({
+      isEditMode: true,
+      disabled: true,
+    });
+
+    expect(wrapper.find(TextField).prop('disabled')).toBeTruthy();
+  });
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { Formik } from 'formik';
 
-import { PointContainer } from './PointContainer';
+import { PointContainerPure } from './PointContainer';
 import { IPointGroupForm } from '../../interfaces';
 import { Point } from '../../components/Point';
 
@@ -12,16 +12,16 @@ const getWrapper = (props = {}) => {
       initialValues={{
         points: [
           {
-            id: 1,
+            id: 'p-1',
             isActive: true,
             name: 'testName',
-            pointGroupId: '1',
+            pointGroupId: 'g-2',
           },
         ],
       }}
       onSubmit={jest.fn()}
     >
-      <PointContainer
+      <PointContainerPure
         disabled={false}
         index={0}
         isEditMode={false}
@@ -40,7 +40,11 @@ describe('<PointContainer />', () => {
 
     wrapper.find(Point).prop<() => void>('onPointToggle')();
 
-    expect(togglePointMock).toHaveBeenCalledWith(1, false);
+    expect(togglePointMock).toHaveBeenCalledWith({
+      groupId: 'g-2',
+      id: 'p-1',
+      isActive: false,
+    });
   });
 
   it('should call deletePoint with point id and pointGroupId', () => {
@@ -51,7 +55,7 @@ describe('<PointContainer />', () => {
 
     wrapper.find(Point).prop<() => void>('onPointDelete')();
 
-    expect(deletePointMock).toHaveBeenCalledWith(1, '1');
+    expect(deletePointMock).toHaveBeenCalledWith('p-1', 'g-2');
   });
 
   it('should render Point with disabled and isEditMode and disabled', () => {

@@ -51,4 +51,45 @@ describe('<Actions />', () => {
       expect(wrapper.find(AddIcon).exists()).toBeTruthy();
     });
   });
+
+  describe('actions', () => {
+    it('should call onSave callback when done button is clicked', () => {
+      const onSaveMock = jest.fn();
+      const wrapper = getWrapper({ isEditMode: true, onSave: onSaveMock });
+
+      wrapper.find(DoneIcon).closest(IconButton).prop<() => void>('onClick')();
+
+      expect(onSaveMock).toHaveBeenCalled();
+    });
+
+    it('should call onSave callback when edit button is clicked', () => {
+      const onEditMock = jest.fn();
+      const wrapper = getWrapper({ isEditMode: false, onEdit: onEditMock });
+
+      wrapper.find(EditIcon).closest(IconButton).prop<() => void>('onClick')();
+
+      expect(onEditMock).toHaveBeenCalled();
+    });
+
+    it('should call onSave callback when done button is clicked', () => {
+      const onDeleteMock = jest.fn();
+      const wrapper = getWrapper({ isEditMode: true, onDelete: onDeleteMock });
+
+      wrapper
+        .find(DeleteIcon)
+        .closest(IconButton)
+        .prop<() => void>('onClick')();
+
+      expect(onDeleteMock).toHaveBeenCalled();
+    });
+
+    it('should call onSave callback when done button is clicked', () => {
+      const onAddMock = jest.fn();
+      const wrapper = getWrapper({ isEditMode: true, onAdd: onAddMock });
+
+      wrapper.find(AddIcon).closest(IconButton).prop<() => void>('onClick')();
+
+      expect(onAddMock).toHaveBeenCalled();
+    });
+  });
 });

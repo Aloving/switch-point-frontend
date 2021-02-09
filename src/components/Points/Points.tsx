@@ -1,10 +1,11 @@
 import React from 'react';
 import { FieldArray } from 'formik';
 
-import { IPoint } from '../../interfaces';
 import { PointContainer } from '../../containers';
 
 import styles from './Points.module.css';
+
+import { IPoint } from '../../interfaces';
 
 export interface IPointsProps {
   disabled: boolean;
@@ -18,9 +19,9 @@ export const Points: React.FC<IPointsProps> = ({ disabled, isEditMode }) => {
         const points: IPoint[] = form.values.points as IPoint[];
 
         return points.map((point, index) => (
-          <div className={styles.point} key={point.id}>
+          <div className={styles.point} key={point.id || `new-${index}`}>
             <PointContainer
-              key={point.id}
+              key={point.id || `new-${index}`}
               disabled={disabled}
               index={index}
               isEditMode={isEditMode}
