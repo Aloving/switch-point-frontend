@@ -26,6 +26,9 @@ const getWrapper = (props = {}) => {
         disabled={false}
         isEditMode={false}
         applyChanges={jest.fn()}
+        onDelete={jest.fn()}
+        onAddPoint={jest.fn()}
+        onEdit={jest.fn()}
         {...props}
       />
     </Formik>,
@@ -54,5 +57,49 @@ describe('<PointGroup />', () => {
     expect(wrapper.find(GroupCard).prop('isEditMode')).toBeTruthy();
     expect(wrapper.find(GroupSubHeader).prop('isEditMode')).toBeTruthy();
     expect(wrapper.find(Points).prop('isEditMode')).toBeTruthy();
+  });
+
+  it('should invoke onAddPoint when onAdd is called in Actions', () => {
+    const onAddPointMock = jest.fn();
+    const wrapper = getWrapper({
+      onAddPoint: onAddPointMock,
+    });
+
+    wrapper.find(Actions).first().prop<() => void>('onAdd')();
+
+    expect(onAddPointMock).toHaveBeenCalled();
+  });
+
+  it('should invoke onEdit when onEdit is called in Actions', () => {
+    const onEditMock = jest.fn();
+    const wrapper = getWrapper({
+      onEdit: onEditMock,
+    });
+
+    wrapper.find(Actions).first().prop<() => void>('onEdit')();
+
+    expect(onEditMock).toHaveBeenCalled();
+  });
+
+  it('should invoke applyChanges when onSave is called in Actions', () => {
+    const applyChangesMock = jest.fn();
+    const wrapper = getWrapper({
+      applyChanges: applyChangesMock,
+    });
+
+    wrapper.find(Actions).first().prop<() => void>('onSave')();
+
+    expect(applyChangesMock).toHaveBeenCalled();
+  });
+
+  it('should invoke onDelete when onDelete is called in Actions', () => {
+    const onDeleteMock = jest.fn();
+    const wrapper = getWrapper({
+      onDelete: onDeleteMock,
+    });
+
+    wrapper.find(Actions).first().prop<() => void>('onDelete')();
+
+    expect(onDeleteMock).toHaveBeenCalled();
   });
 });
