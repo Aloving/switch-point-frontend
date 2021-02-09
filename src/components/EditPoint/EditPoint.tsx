@@ -7,20 +7,18 @@ import styles from './EditPoint.module.css';
 
 interface IEditPointProps extends FieldInputProps<string> {
   disabled: boolean;
-  pointName: string;
   onPointDelete?: () => void;
 }
 
 export const EditPoint = ({
   onPointDelete,
-  pointName,
   disabled,
   ...fieldProps
 }: IEditPointProps) => {
   const fieldRef = React.useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!pointName && fieldRef.current) {
+    if (!fieldProps.value && fieldRef.current) {
       fieldRef.current.focus();
     }
   }, [fieldRef]);
