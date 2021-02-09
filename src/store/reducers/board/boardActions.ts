@@ -16,7 +16,7 @@ import {
 
 const createGroup = createAction(
   CREATE_GROUP,
-  (payload: IPointGroup) => payload,
+  (payload: Omit<IPointGroup, 'id'>) => payload,
 )<IPointGroup>();
 const deleteGroup = createAction(DELETE_GROUP, (id: string) => ({
   id,

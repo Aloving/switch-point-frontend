@@ -10,7 +10,7 @@ interface IAddingModeContainerProps {
   isLoading: boolean;
   editModeId: null | string;
 
-  createGroup(payload: Omit<IPointGroup, 'id'>): void;
+  createGroup: (payload: Omit<IPointGroup, 'id'>) => void;
   onClose: () => void;
 }
 
