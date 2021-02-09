@@ -1,24 +1,24 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { Formik, FormikProps } from 'formik';
+import { act } from 'react-dom/test-utils';
+import { Provider } from 'react-redux';
 
+import { store } from '../../store';
 import { IPoint, IPointGroupForm } from '../../interfaces';
 import { Point } from '../Point';
 import { Points, IPointsProps } from './Points';
-import { act } from 'react-dom/test-utils';
 
 const pointsExample: IPoint[] = [
   {
-    id: 1,
+    id: '1',
     name: 'Name #1',
-    description: 'Description #1',
     pointGroupId: 'testPointGroupId #1',
     isActive: true,
   },
   {
-    id: 2,
+    id: '2',
     name: 'Name #2',
-    description: 'Description #2',
     pointGroupId: 'testPointGroupId #2',
     isActive: false,
   },
@@ -30,13 +30,15 @@ interface IWrapperProps extends Partial<IPointsProps> {
 
 const getWrapper = ({ formikRef, ...props }: IWrapperProps) => {
   return mount(
-    <Formik
-      initialValues={{ points: pointsExample }}
-      onSubmit={jest.fn()}
-      innerRef={formikRef}
-    >
-      <Points isEditMode={false} disabled={false} {...props} />
-    </Formik>,
+    <Provider store={store}>
+      <Formik
+        initialValues={{ points: pointsExample }}
+        onSubmit={jest.fn()}
+        innerRef={formikRef}
+      >
+        <Points isEditMode={false} disabled={false} {...props} />
+      </Formik>
+    </Provider>,
   );
 };
 
