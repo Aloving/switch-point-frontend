@@ -26,7 +26,6 @@ export const Point = ({
   return isEditMode ? (
     <EditPoint
       onPointDelete={onPointDelete}
-      pointName={nameField.value}
       disabled={disabled}
       {...nameField}
     />

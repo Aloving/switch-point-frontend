@@ -17,7 +17,7 @@ const getWrapper = ({ points, ...props }: IWrapperProps) => {
       initialValues={{
         points: points || [
           {
-            id: 1,
+            id: '1',
             isActive: false,
             name: 'testName',
             pointGroupId: '1',
@@ -66,7 +66,7 @@ describe('<Point />', () => {
         isEditMode: false,
         points: [
           {
-            id: 1,
+            id: '1',
             isActive: true,
             name: 'testName',
             pointGroupId: '1',
@@ -82,7 +82,7 @@ describe('<Point />', () => {
         isEditMode: false,
         points: [
           {
-            id: 1,
+            id: '1',
             isActive: false,
             name: 'testName',
             pointGroupId: '1',
