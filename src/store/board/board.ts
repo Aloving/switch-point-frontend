@@ -95,6 +95,21 @@ const listsReducer = createReducer(initialState.lists)
       group.id === action.payload.id ? action.payload : group,
     ),
   }))
+  .handleAction(boardActions.setPoint, (state, action) => ({
+    ...state,
+    data: state.data.map((group) => {
+      if (group.id === action.payload.pointGroupId) {
+        return {
+          ...group,
+          points: group.points.map((point) =>
+            point.id === action.payload.id ? action.payload : point,
+          ),
+        };
+      }
+
+      return group;
+    }),
+  }))
   .handleAction(boardActions.toggleActivePoint, (state, { payload }) => ({
     ...state,
     data: state.data.map((group) => {

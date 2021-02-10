@@ -1,6 +1,8 @@
-import { all, takeEvery } from 'redux-saga/effects';
+import { all, takeEvery, getContext, call, put } from 'redux-saga/effects';
 
 import { boardActions } from './boardActions';
+import { IApi } from '../../API';
+import { IPoint } from '../../interfaces';
 
 export function* createGroupSaga(
   action: ReturnType<typeof boardActions.createGroup>,
@@ -14,10 +16,22 @@ export function* deleteGroupSaga(
   console.log(action);
 }
 
-export function* toggleActivePointSaga(
-  action: ReturnType<typeof boardActions.toggleActivePoint>,
-) {
-  console.log(action);
+export function* toggleActivePointSaga({
+  payload: { id, isActive },
+}: ReturnType<typeof boardActions.toggleActivePoint>) {
+  const api: IApi = yield getContext('api');
+
+  try {
+    const updatedPoint: IPoint = yield call(
+      api.pointService.toggleIsActive,
+      id,
+      isActive,
+    );
+
+    yield put(boardActions.setPoint(updatedPoint));
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 export function* updateGroupSaga(

@@ -11,3 +11,5 @@ export const DELETE_GROUP = `${PREFIX}//DELETE_GROUP`;
 export const CREATE_GROUP = `${PREFIX}//CREATE_GROUP`;
 export const UPDATE_GROUP = `${PREFIX}//UPDATE_GROUP`;
 export const TOGGLE_ACTIVE_POINT = `${PREFIX}//TOGGLE_ACTIVE_POINT`;
+
+export const SET_POINT = `${PREFIX}//SET_POINT`;

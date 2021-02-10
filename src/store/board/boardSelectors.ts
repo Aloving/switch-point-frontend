@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { IStoreState } from '../../../interfaces';
+import { IStoreState } from '../../interfaces';
 
 export const selectBoardSlice = (state: IStoreState) => state.board;
 export const selectEditId = createSelector(

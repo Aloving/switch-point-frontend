@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useField } from 'formik';
 import { connect } from 'react-redux';
 
-import { boardActions } from '../../store';
+import { boardActions } from '../../store/board';
 import { Point } from '../../components';
 
 import { IPoint, IPointGroup } from '../../interfaces';

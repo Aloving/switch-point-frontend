@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 
-import { selectIsLoading, selectEditId, boardActions } from '../../store';
+import { selectIsLoading, selectEditId, boardActions } from '../../store/board';
 import { AddingMode } from '../../components';
 
 import { IPointGroup, IStoreState } from '../../interfaces';

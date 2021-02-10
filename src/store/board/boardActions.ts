@@ -1,6 +1,6 @@
 import { createAction, createAsyncAction } from 'typesafe-actions';
 
-import { IPointGroup } from '../../../interfaces';
+import { IPoint, IPointGroup } from '../../interfaces';
 
 import {
   CREATE_GROUP,
@@ -10,6 +10,7 @@ import {
   FETCH_GROUPS_REQUEST,
   RESET_EDIT_MODE,
   SET_EDIT_MODE,
+  SET_POINT,
   TOGGLE_ACTIVE_POINT,
   UPDATE_GROUP,
 } from './constants';
@@ -38,6 +39,10 @@ const toggleActivePoint = createAction(TOGGLE_ACTIVE_POINT)<{
   groupId: string;
   isActive: boolean;
 }>();
+const setPoint = createAction(
+  SET_POINT,
+  (payload: IPoint) => payload,
+)<IPoint>();
 
 export const boardActions = {
   createGroup,
@@ -47,6 +52,7 @@ export const boardActions = {
   fetchGroupsRequest: fetchGroups.request,
   resetEditMode,
   setEditMode,
+  setPoint,
   toggleActivePoint,
   updateGroup,
 };

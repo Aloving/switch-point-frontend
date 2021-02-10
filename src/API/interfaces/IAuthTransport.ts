@@ -1,12 +1,10 @@
-import { IHttpTransportOptions } from './HttpTransportOptions';
-import { ILoginRequestPayload } from './LoginRequestPayload';
-import { ITokensResponse } from './TokenResponse';
+import { IHttpTransportOptions } from './IHttpTransportOptions';
+import { ILoginRequestPayload } from './ILoginRequestPayload';
+import { ITokensResponse } from './ITokenResponse';
 
 type TDataRequest = Record<string, any>;
 
 export interface IAuthTransport {
-  token: string | null;
-  refreshToken: string | null;
   login(payload: ILoginRequestPayload): Promise<ITokensResponse>;
   logout(): void;
   updateToken(refreshToken: string): Promise<ITokensResponse>;

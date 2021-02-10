@@ -3,7 +3,7 @@ import { Formik, Form, FormikProps } from 'formik';
 import { connect } from 'react-redux';
 
 import { useGroupFormHelpers } from '../../helpers';
-import { boardActions } from '../../store';
+import { boardActions } from '../../store/board';
 import { PointGroup } from '../../components';
 
 import { IPointGroup, IPointGroupForm } from '../../interfaces';

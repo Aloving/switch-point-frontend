@@ -1,7 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { boardActions, selectEditId, selectPointGroups } from '../../store';
+import {
+  boardActions,
+  selectEditId,
+  selectPointGroups,
+} from '../../store/board';
 import { Board } from '../../components';
 
 import { IPointGroup, IStoreState } from '../../interfaces';
