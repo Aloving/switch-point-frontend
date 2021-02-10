@@ -1,15 +1,11 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-import {
-  IApiResponse,
-  IHttpTransport,
-  IHttpTransportOptions,
-} from '../interfaces';
+import { IHttpTransport, IHttpTransportOptions } from '../interfaces';
 
 class HttpTransport implements IHttpTransport {
   private readonly _client: AxiosInstance = axios.create();
 
-  async makeRequest<R>(config: AxiosRequestConfig): Promise<IApiResponse<R>> {
+  async makeRequest<R>(config: AxiosRequestConfig): Promise<R> {
     const { data: responseData } = await this._client(config);
 
     return responseData;
@@ -18,16 +14,13 @@ class HttpTransport implements IHttpTransport {
   async delete<R = any>(
     url: string,
     config?: IHttpTransportOptions,
-  ): Promise<IApiResponse<R>> {
+  ): Promise<R> {
     const { data: responseData } = await this._client.delete(url, config);
 
     return responseData;
   }
 
-  async get<R = any>(
-    url: string,
-    config?: IHttpTransportOptions,
-  ): Promise<IApiResponse<R>> {
+  async get<R = any>(url: string, config?: IHttpTransportOptions): Promise<R> {
     const { data: responseData } = await this._client.get(url, config);
 
     return responseData;
@@ -37,7 +30,7 @@ class HttpTransport implements IHttpTransport {
     url: string,
     data?: D,
     config?: IHttpTransportOptions,
-  ): Promise<IApiResponse<R>> {
+  ): Promise<R> {
     const { data: responseData } = await this._client.post(url, data, config);
 
     return responseData;
@@ -47,7 +40,7 @@ class HttpTransport implements IHttpTransport {
     url: string,
     data?: D,
     config?: IHttpTransportOptions,
-  ): Promise<IApiResponse<R>> {
+  ): Promise<R> {
     const { data: responseData } = await this._client.put(url, data, config);
 
     return responseData;
@@ -57,7 +50,7 @@ class HttpTransport implements IHttpTransport {
     url: string,
     data?: D,
     config?: IHttpTransportOptions,
-  ): Promise<IApiResponse<R>> {
+  ): Promise<R> {
     const { data: responseData } = await this._client.patch(url, data, config);
 
     return responseData;
@@ -70,8 +63,8 @@ class HttpTransport implements IHttpTransport {
     this._client.interceptors.request.use(onFulfilled, onRejected);
   }
 
-  responseMiddleware(
-    onFulfilled: (value: IApiResponse) => IApiResponse | Promise<IApiResponse>,
+  responseMiddleware<R = any>(
+    onFulfilled: (value: R) => Promise<R>,
     onRejected: (error: any, retry?: boolean) => any,
   ): void {
     this._client.interceptors.response.use((resp) => {

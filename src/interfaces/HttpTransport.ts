@@ -1,45 +1,38 @@
 import { AxiosRequestConfig } from 'axios';
-import { IApiResponse } from './ApiResponse';
 import { IHttpTransportOptions } from './HttpTransportOptions';
 
 export interface IHttpTransport {
-  get<R = any>(
-    url: string,
-    config?: IHttpTransportOptions,
-  ): Promise<IApiResponse<R>>;
+  get<R = any>(url: string, config?: IHttpTransportOptions): Promise<R>;
 
   post<R = any, D = Record<string, unknown>>(
     url: string,
     data?: D,
     config?: IHttpTransportOptions,
-  ): Promise<IApiResponse<R>>;
+  ): Promise<R>;
 
   put<R = any, D = Record<string, unknown>>(
     url: string,
     data?: D,
     config?: IHttpTransportOptions,
-  ): Promise<IApiResponse<R>>;
+  ): Promise<R>;
 
   patch<R = any, D = Record<string, unknown>>(
     url: string,
     data?: D,
     config?: IHttpTransportOptions,
-  ): Promise<IApiResponse<R>>;
+  ): Promise<R>;
 
-  delete<R = any>(
-    url: string,
-    config?: IHttpTransportOptions,
-  ): Promise<IApiResponse<R>>;
+  delete<R = any>(url: string, config?: IHttpTransportOptions): Promise<R>;
 
-  makeRequest<R>(config: AxiosRequestConfig): Promise<IApiResponse<R>>;
+  makeRequest<R>(config: AxiosRequestConfig): Promise<R>;
 
   requestMiddleware(
     onFulfilled?: (value: IHttpTransportOptions) => IHttpTransportOptions,
     onRejected?: (error: any) => any,
   ): void;
 
-  responseMiddleware(
-    onFulfilled: (value: IApiResponse) => IApiResponse | Promise<IApiResponse>,
+  responseMiddleware<R = any>(
+    onFulfilled: (value: R) => Promise<R>,
     onRejected?: (error: any) => any,
   ): void;
 }

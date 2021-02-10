@@ -1,7 +1,5 @@
-import { ApiResponseEnum } from '../enums/ApiResponse';
 import { HttpStatus } from '../enums/HttpStatus';
 import {
-  IApiResponse,
   IAuthTransport,
   IHttpTransport,
   IHttpTransportOptions,
@@ -137,10 +135,10 @@ export class AuthTransport implements IAuthTransport {
       login,
       password,
     });
-    const { status, data } = response;
-    if (status === ApiResponseEnum.SUCCESS) {
-      this.token = data.accessToken;
-      this.refreshToken = data.refreshToken;
+    const { accessToken, refreshToken } = response;
+    if (accessToken && refreshToken) {
+      this.token = accessToken;
+      this.refreshToken = refreshToken;
       this.onLoginSubscribers.forEach((subscriber) => subscriber());
     }
 
