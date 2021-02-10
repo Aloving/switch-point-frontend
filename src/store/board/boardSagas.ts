@@ -1,29 +1,75 @@
-import { all, takeEvery, getContext, call, put } from 'redux-saga/effects';
+import {
+  all,
+  takeLatest,
+  getContext,
+  call,
+  put,
+  select,
+  delay,
+} from 'redux-saga/effects';
+import { v4 as uuid } from 'uuid';
 
 import { boardActions } from './boardActions';
-import { IApi } from '../../API';
-import { IPoint } from '../../interfaces';
+import { selectGroup } from './boardSelectors';
 
-export function* createGroupSaga(
-  action: ReturnType<typeof boardActions.createGroup>,
-) {
-  console.log(action);
+import { IApi } from '../../API';
+import { IPoint, IPointGroup } from '../../interfaces';
+
+export function* createGroupSaga({
+  payload,
+}: ReturnType<typeof boardActions.createGroupRequest>) {
+  const { pointGroupService }: IApi = yield getContext('api');
+  const temporaryGroup: IPointGroup = {
+    ...payload,
+    id: uuid(),
+  };
+
+  yield put(boardActions.pushGroup(temporaryGroup));
+
+  try {
+    const createdGroup: IPointGroup = yield call(
+      pointGroupService.createGroup,
+      payload,
+    );
+
+    yield delay(1000);
+
+    yield put(
+      boardActions.createGroupCompleted({
+        initialGroup: temporaryGroup,
+        swapGroup: createdGroup,
+      }),
+    );
+  } catch (e) {
+    yield put(boardActions.deleteGroup(temporaryGroup.id));
+
+    console.error(e);
+  }
 }
 
-export function* deleteGroupSaga(
-  action: ReturnType<typeof boardActions.deleteGroup>,
-) {
-  console.log(action);
+export function* deleteGroupSaga({
+  payload,
+}: ReturnType<typeof boardActions.deleteGroup>) {
+  const { pointGroupService }: IApi = yield getContext('api');
+  const currentGroup: IPointGroup = yield select(selectGroup(payload.id));
+
+  try {
+    yield call(pointGroupService.deleteGroup, payload.id);
+  } catch (e) {
+    yield put(boardActions.setGroup(currentGroup));
+
+    console.error(e);
+  }
 }
 
 export function* toggleActivePointSaga({
   payload: { id, isActive },
 }: ReturnType<typeof boardActions.toggleActivePoint>) {
-  const api: IApi = yield getContext('api');
+  const { pointService }: IApi = yield getContext('api');
 
   try {
     const updatedPoint: IPoint = yield call(
-      api.pointService.toggleIsActive,
+      pointService.toggleIsActive,
       id,
       isActive,
     );
@@ -35,16 +81,42 @@ export function* toggleActivePointSaga({
 }
 
 export function* updateGroupSaga(
-  action: ReturnType<typeof boardActions.updateGroup>,
+  action: ReturnType<typeof boardActions.updateGroupRequest>,
 ) {
-  console.log(action);
+  const { pointGroupService }: IApi = yield getContext('api');
+
+  try {
+    const updatedGroup: IPointGroup = yield call(
+      pointGroupService.updateGroup,
+      action.payload,
+    );
+
+    yield put(boardActions.setGroup(updatedGroup));
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export function* getGroupsSaga() {
+  const { pointGroupService }: IApi = yield getContext('api');
+
+  try {
+    const groups: IPointGroup[] = yield call(pointGroupService.getGroups);
+
+    yield delay(1000);
+
+    yield put(boardActions.fetchGroupsCompleted(groups));
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 export function* boardMainSaga() {
   yield all([
-    takeEvery(boardActions.createGroup, createGroupSaga),
-    takeEvery(boardActions.deleteGroup, deleteGroupSaga),
-    takeEvery(boardActions.toggleActivePoint, toggleActivePointSaga),
-    takeEvery(boardActions.updateGroup, updateGroupSaga),
+    takeLatest(boardActions.createGroupRequest, createGroupSaga),
+    takeLatest(boardActions.deleteGroup, deleteGroupSaga),
+    takeLatest(boardActions.toggleActivePoint, toggleActivePointSaga),
+    takeLatest(boardActions.updateGroupRequest, updateGroupSaga),
+    takeLatest(boardActions.fetchGroupsRequest, getGroupsSaga),
   ]);
 }

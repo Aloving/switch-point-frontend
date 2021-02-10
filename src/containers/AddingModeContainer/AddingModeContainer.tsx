@@ -44,7 +44,7 @@ const mapStateToProps = (state: IStoreState) => ({
 });
 
 const mapDispatchToProps = {
-  createGroup: boardActions.createGroup,
+  createGroup: boardActions.createGroupRequest,
 };
 
 export const AddingModeContainer = connect(

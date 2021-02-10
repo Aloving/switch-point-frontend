@@ -32,6 +32,7 @@ export const Point = ({
   ) : (
     <Button
       variant="contained"
+      disabled={disabled}
       color={isActiveField.value ? 'primary' : 'default'}
       startIcon={<AdjustIcon />}
       onClick={onPointToggle}

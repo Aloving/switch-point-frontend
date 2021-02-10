@@ -24,10 +24,9 @@ interface IPointContainerProps {
 
 export const PointContainerPure = ({
   deletePoint,
-  disabled,
   index,
-  isEditMode,
   togglePoint,
+  ...props
 }: IPointContainerProps) => {
   const [pointField] = useField<IPoint>(`points.${index}`);
   const pointData = pointField.value;
@@ -45,11 +44,10 @@ export const PointContainerPure = ({
 
   return (
     <Point
-      disabled={disabled}
       index={index}
-      isEditMode={isEditMode}
       onPointToggle={handleOnPointToggle}
       onPointDelete={handleOnPointDelete}
+      {...props}
     />
   );
 };

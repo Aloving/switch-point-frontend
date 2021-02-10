@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 import { BoardState } from './interfaces';
 
 import { boardActions } from './boardActions';
+import { IPointGroup } from '../../interfaces';
 
 const initialState: BoardState = {
   editMode: null,
@@ -11,58 +12,7 @@ const initialState: BoardState = {
     isLoading: false,
     completed: false,
     error: false,
-    data: [
-      {
-        id: '10',
-        name: 'name',
-        description: 'descriptions',
-        points: [
-          {
-            id: '1',
-            isActive: true,
-            pointGroupId: '10',
-            name: 'first point',
-          },
-          {
-            id: '2',
-            isActive: false,
-            pointGroupId: '10',
-            name: 'second point',
-          },
-        ],
-      },
-      {
-        id: '111',
-        name: 'name',
-        description: 'descriptions',
-        points: [
-          {
-            id: '1',
-            isActive: true,
-            pointGroupId: '111',
-            name: 'first point',
-          },
-          {
-            id: '2',
-            isActive: false,
-            pointGroupId: '111',
-            name: 'second point',
-          },
-          {
-            id: '3',
-            isActive: false,
-            pointGroupId: '111',
-            name: 'second point',
-          },
-          {
-            id: '4',
-            isActive: false,
-            pointGroupId: '111',
-            name: 'second point',
-          },
-        ],
-      },
-    ],
+    data: [],
   },
 };
 
@@ -70,63 +20,77 @@ const editModeReducer = createReducer(initialState.editMode)
   .handleAction(boardActions.setEditMode, (state, action) => action.payload.id)
   .handleAction(boardActions.resetEditMode, () => initialState.editMode);
 
-const listsReducer = createReducer(initialState.lists)
-  .handleAction(boardActions.deleteGroup, (state, { payload }) => ({
-    ...state,
-    data: state.data.filter((group) => group.id !== payload.id),
-  }))
-  .handleAction(boardActions.fetchGroupsRequest, (state) => ({
-    ...state,
-    isLoading: true,
-  }))
-  .handleAction(boardActions.fetchGroupsCompleted, (state, action) => ({
-    ...state,
-    isLoading: false,
-    completed: true,
-    data: action.payload,
-  }))
-  .handleAction(boardActions.fetchGroupsFailure, (state) => ({
-    ...state,
-    error: true,
-  }))
-  .handleAction(boardActions.updateGroup, (state, action) => ({
-    ...state,
-    data: state.data.map((group) =>
-      group.id === action.payload.id ? action.payload : group,
+const listsReducer = combineReducers({
+  data: createReducer(initialState.lists.data)
+    .handleAction(
+      boardActions.fetchGroupsCompleted,
+      (state, action) => action.payload,
+    )
+    .handleAction(boardActions.deleteGroup, (state, { payload }) =>
+      state.filter((group) => group.id !== payload.id),
+    )
+    .handleAction(boardActions.setGroup, (state, action) =>
+      state.map((group) =>
+        group.id === action.payload.id ? action.payload : group,
+      ),
+    )
+    .handleAction(boardActions.pushGroup, (state, action) => [
+      ...state,
+      action.payload,
+    ])
+    .handleAction(boardActions.setPoint, (state, action) =>
+      state.map((group) => {
+        if (group.id === action.payload.pointGroupId) {
+          return {
+            ...group,
+            points: group.points.map((point) =>
+              point.id === action.payload.id ? action.payload : point,
+            ),
+          };
+        }
+
+        return group;
+      }),
+    )
+    .handleAction(
+      [boardActions.insertToGroup, boardActions.createGroupCompleted],
+      (state, { payload }) => {
+        return state.reduce((acc, cur) => {
+          if (cur.id === payload.initialGroup.id) {
+            return [...acc, payload.swapGroup];
+          }
+
+          return [...acc, cur];
+        }, [] as IPointGroup[]);
+      },
+    )
+    .handleAction(boardActions.toggleActivePoint, (state, { payload }) =>
+      state.map((group) => {
+        if (group.id === payload.groupId) {
+          return {
+            ...group,
+            points: group.points.map((point) =>
+              point.id === payload.id
+                ? { ...point, isActive: payload.isActive }
+                : point,
+            ),
+          };
+        }
+
+        return group;
+      }),
     ),
-  }))
-  .handleAction(boardActions.setPoint, (state, action) => ({
-    ...state,
-    data: state.data.map((group) => {
-      if (group.id === action.payload.pointGroupId) {
-        return {
-          ...group,
-          points: group.points.map((point) =>
-            point.id === action.payload.id ? action.payload : point,
-          ),
-        };
-      }
-
-      return group;
-    }),
-  }))
-  .handleAction(boardActions.toggleActivePoint, (state, { payload }) => ({
-    ...state,
-    data: state.data.map((group) => {
-      if (group.id === payload.groupId) {
-        return {
-          ...group,
-          points: group.points.map((point) =>
-            point.id === payload.id
-              ? { ...point, isActive: payload.isActive }
-              : point,
-          ),
-        };
-      }
-
-      return group;
-    }),
-  }));
+  isLoading: createReducer(initialState.lists.isLoading)
+    .handleAction(boardActions.fetchGroupsCompleted, () => false)
+    .handleAction(boardActions.createGroupCompleted, () => false)
+    .handleAction(boardActions.createGroupRequest, () => true)
+    .handleAction(boardActions.fetchGroupsRequest, () => true),
+  completed: createReducer(initialState.lists.completed),
+  error: createReducer(initialState.lists.error).handleAction(
+    boardActions.fetchGroupsFailure,
+    () => true,
+  ),
+});
 
 export const boardReducer = combineReducers({
   editMode: editModeReducer,

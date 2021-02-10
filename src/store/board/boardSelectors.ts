@@ -11,6 +11,22 @@ export const selectLists = createSelector(
   selectBoardSlice,
   (board) => board.lists,
 );
+export const selectListsCompleted = createSelector(
+  selectLists,
+  (board) => board.completed,
+);
+export const selectListsLoading = createSelector(
+  selectLists,
+  (board) => board.completed,
+);
+export const selectListsData = createSelector(
+  selectLists,
+  (listSlice) => listSlice.data,
+);
+export const selectGroup = (groupId: string) =>
+  createSelector(selectListsData, (groups) =>
+    groups.find((group) => group.id == groupId),
+  );
 export const selectIsLoading = createSelector(
   selectLists,
   (board) => board.isLoading,

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useField } from 'formik';
-import { Box, TextField } from '@material-ui/core';
+import { Box, TextField, Typography } from '@material-ui/core';
 
 interface IGroupTitleProps {
   disabled: boolean;
@@ -30,7 +30,11 @@ export const GroupTitle = ({ isEditMode, disabled }: IGroupTitleProps) => {
           {...nameFormField}
         />
       )}
-      {!isEditMode && <>{nameValue}</>}
+      {!isEditMode && (
+        <Typography variant="h4" component="h3">
+          {nameValue}
+        </Typography>
+      )}
     </Box>
   );
 };

@@ -29,7 +29,6 @@ export const Board = ({ lists, editId, resetEditMode }: IBoardProps) => {
             name={name}
             description={description}
             points={points}
-            isLoading={false}
             isEditMode={id === editId}
           />
         </div>
