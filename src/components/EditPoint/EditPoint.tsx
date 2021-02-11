@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { KeyboardEvent, useCallback, useEffect } from 'react';
 import { TextField, Box, IconButton } from '@material-ui/core';
 import { FieldInputProps } from 'formik';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -7,15 +7,26 @@ import styles from './EditPoint.module.css';
 
 interface IEditPointProps extends FieldInputProps<string> {
   disabled: boolean;
+
+  onSubmit: () => void;
   onPointDelete?: () => void;
 }
 
 export const EditPoint = ({
   onPointDelete,
   disabled,
+  onSubmit,
   ...fieldProps
 }: IEditPointProps) => {
   const fieldRef = React.useRef<HTMLInputElement>(null);
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.nativeEvent.key === 'Enter') {
+        onSubmit();
+      }
+    },
+    [onSubmit],
+  );
 
   useEffect(() => {
     if (!fieldProps.value && fieldRef.current) {
@@ -31,6 +42,9 @@ export const EditPoint = ({
         fullWidth
         disabled={disabled}
         inputRef={fieldRef}
+        inputProps={{
+          onKeyDown: handleKeyDown,
+        }}
         {...fieldProps}
       />
       <IconButton

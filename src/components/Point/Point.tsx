@@ -9,6 +9,8 @@ export interface IPointProps {
   disabled: boolean;
   index: number;
   isEditMode: boolean;
+
+  onSubmit: () => void;
   onPointToggle: () => void;
   onPointDelete: () => void;
 }
@@ -19,14 +21,16 @@ export const Point = ({
   isEditMode,
   onPointDelete,
   onPointToggle,
+  onSubmit,
 }: IPointProps) => {
   const [nameField] = useField<string>(`points.${index}.name`);
   const [isActiveField] = useField<boolean>(`points.${index}.isActive`);
 
   return isEditMode ? (
     <EditPoint
-      onPointDelete={onPointDelete}
       disabled={disabled}
+      onSubmit={onSubmit}
+      onPointDelete={onPointDelete}
       {...nameField}
     />
   ) : (
