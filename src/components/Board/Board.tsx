@@ -23,15 +23,13 @@ export const Board = ({ lists, editId, resetEditMode }: IBoardProps) => {
   return (
     <div className={styles.root}>
       {lists.map(({ id, name, description, points }) => (
-        <div className={styles.group} key={id}>
-          <PointGroupContainer
-            id={id}
-            name={name}
-            description={description}
-            points={points}
-            isEditMode={id === editId}
-          />
-        </div>
+        <PointGroupContainer
+          id={id}
+          name={name}
+          description={description}
+          points={points}
+          isEditMode={id === editId}
+        />
       ))}
       <div className={styles.group}>
         {!addingModeOn && (
@@ -39,6 +37,7 @@ export const Board = ({ lists, editId, resetEditMode }: IBoardProps) => {
             variant="outlined"
             color="primary"
             size="large"
+            fullWidth
             onClick={() => activateAddingMode()}
           >
             +
