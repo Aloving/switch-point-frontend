@@ -1,12 +1,17 @@
 .root {
-  display: grid;
-  grid-auto-columns:350px;
-  grid-auto-flow: column;
+  display: flex;
+  align-items: start;
+  padding: 0 0.8rem 0.8rem;
+  overflow-x: auto;
+  height: calc(100vh - 8.6rem);
 }
 
 .group {
-  display: grid;
-  grid-auto-rows: max-content;
-  grid-gap: 10px;
-  padding: 10px;
+  flex: 0 0 27rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #e2e4e6;
+  max-height: calc(100vh - 11.8rem);
+  border-radius: 0.3rem;
+  margin-right: 1rem;
 }
