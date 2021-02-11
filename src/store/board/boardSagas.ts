@@ -10,10 +10,10 @@ import {
 import { v4 as uuid } from 'uuid';
 
 import { boardActions } from './boardActions';
-import { selectGroup } from './boardSelectors';
+import { selectPoint } from './boardSelectors';
 
 import { IApi } from '../../API';
-import { IPoint, IPointGroup } from '../../interfaces';
+import { IPointGroup } from '../../interfaces';
 
 export function* createGroupSaga({
   payload,
@@ -51,31 +51,28 @@ export function* deleteGroupSaga({
   payload,
 }: ReturnType<typeof boardActions.deleteGroup>) {
   const { pointGroupService }: IApi = yield getContext('api');
-  const currentGroup: IPointGroup = yield select(selectGroup(payload.id));
 
   try {
     yield call(pointGroupService.deleteGroup, payload.id);
   } catch (e) {
-    yield put(boardActions.setGroup(currentGroup));
-
     console.error(e);
   }
 }
 
 export function* toggleActivePointSaga({
-  payload: { id, isActive },
+  payload: { id, isActive, groupId },
 }: ReturnType<typeof boardActions.toggleActivePoint>) {
   const { pointService }: IApi = yield getContext('api');
+  const currentPoint = yield select(selectPoint(groupId, id));
+
+  yield delay(1000);
 
   try {
-    const updatedPoint: IPoint = yield call(
-      pointService.toggleIsActive,
-      id,
-      isActive,
-    );
-
-    yield put(boardActions.setPoint(updatedPoint));
+    yield call(pointService.toggleIsActive, id, isActive);
   } catch (e) {
+    // @todo optimize a way to get previous state. There should be async actions for that sagas
+    yield put(boardActions.setPoint({ ...currentPoint, isActive: !isActive }));
+
     console.error(e);
   }
 }

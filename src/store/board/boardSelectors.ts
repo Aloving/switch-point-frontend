@@ -35,3 +35,8 @@ export const selectPointGroups = createSelector(
   selectLists,
   (board) => board.data,
 );
+
+export const selectPoint = (groupId: string, pointId: string) =>
+  createSelector(selectGroup(groupId), (group) =>
+    group?.points.find((point) => point.id === pointId),
+  );
