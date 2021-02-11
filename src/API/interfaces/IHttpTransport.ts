@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
-import { IHttpTransportOptions } from './HttpTransportOptions';
+
+import { IHttpTransportOptions } from './IHttpTransportOptions';
 
 export interface IHttpTransport {
   get<R = any>(url: string, config?: IHttpTransportOptions): Promise<R>;

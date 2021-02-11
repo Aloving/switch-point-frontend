@@ -3,10 +3,10 @@ import { Formik, Form, FormikProps } from 'formik';
 import { connect } from 'react-redux';
 
 import { useGroupFormHelpers } from '../../helpers';
-import { boardActions } from '../../store';
+import { boardActions, selectIsLoading } from '../../store/board';
 import { PointGroup } from '../../components';
 
-import { IPointGroup, IPointGroupForm } from '../../interfaces';
+import { IPointGroup, IPointGroupForm, IStoreState } from '../../interfaces';
 
 export interface IPointGroupContainerProps extends IPointGroup {
   isEditMode: boolean;
@@ -77,13 +77,17 @@ export const PointGroupContainerPure = ({
 };
 
 const mapDispatchToProps = {
-  applyChanges: boardActions.updateGroup,
+  applyChanges: boardActions.updateGroupRequest,
   deleteGroup: boardActions.deleteGroup,
   resetEditMode: boardActions.resetEditMode,
   setEditMode: boardActions.setEditMode,
 };
 
+const mapStateToProps = (state: IStoreState) => ({
+  isLoading: selectIsLoading(state),
+});
+
 export const PointGroupContainer = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(PointGroupContainerPure);

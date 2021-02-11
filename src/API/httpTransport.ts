@@ -1,8 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-import { IHttpTransport, IHttpTransportOptions } from '../interfaces';
+import { IHttpTransport, IHttpTransportOptions } from './interfaces';
 
-class HttpTransport implements IHttpTransport {
+export class HttpTransport implements IHttpTransport {
   private readonly _client: AxiosInstance = axios.create();
 
   async makeRequest<R>(config: AxiosRequestConfig): Promise<R> {

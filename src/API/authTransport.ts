@@ -5,7 +5,7 @@ import {
   IHttpTransportOptions,
   ILoginRequestPayload,
   ITokensResponse,
-} from '../interfaces';
+} from './interfaces';
 
 interface IAuthTransportOptions {
   httpTransport: IHttpTransport;
@@ -81,9 +81,9 @@ export class AuthTransport implements IAuthTransport {
           throw error;
         }
 
-        const {
-          data: { refreshToken, accessToken },
-        } = await this.updateToken(this.refreshToken);
+        const { refreshToken, accessToken } = await this.updateToken(
+          this.refreshToken,
+        );
 
         this.setToken({ refreshToken, accessToken });
 
@@ -130,7 +130,7 @@ export class AuthTransport implements IAuthTransport {
   async login({
     login,
     password,
-  }: ILoginRequestPayload): Promise<IApiResponse<ITokensResponse>> {
+  }: ILoginRequestPayload): Promise<ITokensResponse> {
     const response = await this.client.post<ITokensResponse>('/auth/login', {
       login,
       password,
@@ -157,8 +157,7 @@ export class AuthTransport implements IAuthTransport {
       refreshToken: this.refreshToken || '',
     };
   }
-  // @todo To the future bros
-  updateToken(refreshToken: string): Promise<IApiResponse<ITokensResponse>> {
+  updateToken(refreshToken: string): Promise<ITokensResponse> {
     return this.client.post<ITokensResponse, { refreshToken: string }>(
       REFRESH_TOKEN_URL,
       {
@@ -167,10 +166,7 @@ export class AuthTransport implements IAuthTransport {
     );
   }
 
-  get<R = any>(
-    url: string,
-    config?: IHttpTransportOptions,
-  ): Promise<IApiResponse<R>> {
+  get<R = any>(url: string, config?: IHttpTransportOptions): Promise<R> {
     return this.client.get<R>(url, this.subscribeConfig(config));
   }
 
@@ -178,7 +174,7 @@ export class AuthTransport implements IAuthTransport {
     url: string,
     data?: D,
     config?: IHttpTransportOptions,
-  ): Promise<IApiResponse<R>> {
+  ): Promise<R> {
     return this.client.post<R, D>(url, data, this.subscribeConfig(config));
   }
 
@@ -186,7 +182,7 @@ export class AuthTransport implements IAuthTransport {
     url: string,
     data?: D,
     config?: IHttpTransportOptions,
-  ): Promise<IApiResponse<R>> {
+  ): Promise<R> {
     return this.client.put<R, D>(url, data, this.subscribeConfig(config));
   }
 
@@ -194,14 +190,11 @@ export class AuthTransport implements IAuthTransport {
     url: string,
     data?: D,
     config?: IHttpTransportOptions,
-  ): Promise<IApiResponse<R>> {
+  ): Promise<R> {
     return this.client.patch<R, D>(url, data, this.subscribeConfig(config));
   }
 
-  delete<R = any>(
-    url: string,
-    config?: IHttpTransportOptions,
-  ): Promise<IApiResponse<R>> {
+  delete<R = any>(url: string, config?: IHttpTransportOptions): Promise<R> {
     return this.client.delete(url, this.subscribeConfig(config));
   }
 }

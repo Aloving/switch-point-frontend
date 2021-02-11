@@ -1,4 +1,4 @@
-import { IPointGroup } from '../../../../interfaces';
+import { IPointGroup } from '../../../interfaces';
 
 export interface BoardState {
   editMode: string | null;

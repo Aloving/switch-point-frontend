@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useField } from 'formik';
 import { connect } from 'react-redux';
 
-import { boardActions } from '../../store';
+import { boardActions } from '../../store/board';
 import { Point } from '../../components';
 
 import { IPoint, IPointGroup } from '../../interfaces';
@@ -24,10 +24,9 @@ interface IPointContainerProps {
 
 export const PointContainerPure = ({
   deletePoint,
-  disabled,
   index,
-  isEditMode,
   togglePoint,
+  ...props
 }: IPointContainerProps) => {
   const [pointField] = useField<IPoint>(`points.${index}`);
   const pointData = pointField.value;
@@ -45,11 +44,10 @@ export const PointContainerPure = ({
 
   return (
     <Point
-      disabled={disabled}
       index={index}
-      isEditMode={isEditMode}
       onPointToggle={handleOnPointToggle}
       onPointDelete={handleOnPointDelete}
+      {...props}
     />
   );
 };
