@@ -39,7 +39,7 @@ export const Navigation = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            News
+            Switch-Point
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
