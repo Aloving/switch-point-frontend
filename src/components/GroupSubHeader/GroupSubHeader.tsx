@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { KeyboardEvent, useCallback } from 'react';
 import { Field, FieldProps } from 'formik';
-import { TextField, Box } from '@material-ui/core';
+import { TextField, Box, Typography } from '@material-ui/core';
 
 interface IGroupSubHeaderProps {
   disabled: boolean;
   isEditMode: boolean;
+
+  onSubmit: () => void;
 }
 
 export const GroupSubHeader = ({
   disabled,
   isEditMode,
+  onSubmit,
 }: IGroupSubHeaderProps) => {
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.nativeEvent.key === 'Enter') {
+        onSubmit();
+      }
+    },
+    [onSubmit],
+  );
+
   return (
     <Field name="description">
       {({ field }: FieldProps<string>) => (
@@ -21,10 +33,17 @@ export const GroupSubHeader = ({
               variant="outlined"
               placeholder="description"
               disabled={disabled}
+              inputProps={{
+                onKeyDown: handleKeyDown,
+              }}
               {...field}
             />
           )}
-          {!isEditMode && <>{field.value}</>}
+          {!isEditMode && (
+            <Typography variant="h6" component="h4">
+              {field.value}
+            </Typography>
+          )}
         </Box>
       )}
     </Field>
