@@ -8,6 +8,8 @@ import React, {
 import { useField } from 'formik';
 import { Box, TextField, Typography } from '@material-ui/core';
 
+import styles from './GroupTitle.module.css';
+
 interface IGroupTitleProps {
   disabled: boolean;
   isEditMode: boolean;
@@ -55,9 +57,11 @@ export const GroupTitle = ({
         />
       )}
       {!isEditMode && (
-        <Typography variant="h5" component="h3">
-          {nameValue}
-        </Typography>
+        <div className={styles.textWrapper}>
+          <Typography variant="h5" component="h3">
+            {nameValue}
+          </Typography>
+        </div>
       )}
     </Box>
   );
