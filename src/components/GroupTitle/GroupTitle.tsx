@@ -1,4 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, {
+  KeyboardEvent,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useRef,
+} from 'react';
 import { useField } from 'formik';
 import { Box, TextField, Typography } from '@material-ui/core';
 
@@ -7,12 +13,27 @@ import styles from './GroupTitle.module.css';
 interface IGroupTitleProps {
   disabled: boolean;
   isEditMode: boolean;
+
+  onSubmit: () => void;
 }
 
-export const GroupTitle = ({ isEditMode, disabled }: IGroupTitleProps) => {
+export const GroupTitle = ({
+  isEditMode,
+  disabled,
+  onSubmit,
+}: IGroupTitleProps) => {
   const [nameFormField] = useField('name');
   const textFieldRef = useRef<HTMLInputElement>(null);
   const nameValue = nameFormField.value;
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.nativeEvent.key === 'Enter') {
+        onSubmit();
+      }
+    },
+    [onSubmit],
+  );
 
   useEffect(() => {
     if (!nameValue && textFieldRef.current) {
@@ -29,12 +50,15 @@ export const GroupTitle = ({ isEditMode, disabled }: IGroupTitleProps) => {
           placeholder="name"
           disabled={disabled}
           inputRef={textFieldRef}
+          inputProps={{
+            onKeyDown: handleKeyDown,
+          }}
           {...nameFormField}
         />
       )}
       {!isEditMode && (
         <div className={styles.textWrapper}>
-          <Typography variant="h4" component="h3">
+          <Typography variant="h5" component="h3">
             {nameValue}
           </Typography>
         </div>

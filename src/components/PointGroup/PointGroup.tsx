@@ -46,7 +46,13 @@ export const PointGroup = ({
       <GroupBox isEditMode={isEditMode}>
         <CardHeader
           action={renderActions()}
-          title={<GroupTitle isEditMode={isEditMode} disabled={disabled} />}
+          title={
+            <GroupTitle
+              isEditMode={isEditMode}
+              disabled={disabled}
+              onSubmit={applyChanges}
+            />
+          }
           titleTypographyProps={{
             align: 'left',
           }}
@@ -57,7 +63,11 @@ export const PointGroup = ({
             alignItems: 'end',
           }}
           subheader={
-            <GroupSubHeader isEditMode={isEditMode} disabled={disabled} />
+            <GroupSubHeader
+              isEditMode={isEditMode}
+              disabled={disabled}
+              onSubmit={applyChanges}
+            />
           }
         />
         <Divider variant="middle" />

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useField } from 'formik';
+import { useField, useFormikContext } from 'formik';
 import { connect } from 'react-redux';
 
 import { boardActions } from '../../store/board';
@@ -28,6 +28,7 @@ export const PointContainerPure = ({
   togglePoint,
   ...props
 }: IPointContainerProps) => {
+  const form = useFormikContext<IPointGroup>();
   const [pointField] = useField<IPoint>(`points.${index}`);
   const pointData = pointField.value;
   const handleOnPointToggle = useCallback(() => {
@@ -47,6 +48,7 @@ export const PointContainerPure = ({
       index={index}
       onPointToggle={handleOnPointToggle}
       onPointDelete={handleOnPointDelete}
+      onSubmit={form.submitForm}
       {...props}
     />
   );
